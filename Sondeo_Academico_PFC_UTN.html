@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sondeo de Situación Académica — PFC UTN FRSF</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap');
+
+  :root {
+    --azul: #003D7C;
+    --celeste: #0070C0;
+    --celeste-claro: #E8F4FD;
+    --gris-claro: #F2F5F9;
+    --gris-medio: #8896A8;
+    --gris-texto: #2D3748;
+    --blanco: #ffffff;
+    --verde: #27AE60;
+    --verde-claro: #E8F8F0;
+    --ambar: #E67E22;
+    --ambar-claro: #FEF4E8;
+    --rojo: #C0392B;
+    --rojo-claro: #FCECEA;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--gris-claro); color: var(--gris-texto); min-height: 100vh; }
+
+  /* HEADER */
+  .header {
+    background: var(--azul);
+    padding: 1.25rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,61,124,0.18);
+  }
+  .header-left { display: flex; align-items: center; gap: 1rem; }
+  .header-logo { font-family: 'DM Serif Display', serif; color: var(--blanco); font-size: 1.1rem; line-height: 1.2; }
+  .header-logo span { color: var(--celeste); font-style: italic; }
+  .header-badge { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); font-size: 0.7rem; font-weight: 500; padding: 0.25rem 0.6rem; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .progress-wrap { text-align: right; }
+  .progress-bar-wrap { width: 180px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--celeste); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+  .progress-label { color: rgba(255,255,255,0.7); font-size: 0.72rem; margin-top: 0.25rem; }
+
+  /* CONTENEDOR */
+  .container { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* PANTALLAS */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* BIENVENIDA */
+  .bienvenida-card { background: var(--blanco); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,61,124,0.08); }
+  .bienvenida-hero {
+    background: linear-gradient(135deg, #004E96 0%, #0070C0 100%);
+    padding: 2.5rem 2.5rem 2rem; position: relative; overflow: hidden;
+  }
+  .bienvenida-hero::before { content:''; position:absolute; right:-40px; top:-40px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,0.05); }
+  .bienvenida-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 0.75rem; }
+  .bienvenida-titulo { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--blanco); line-height: 1.2; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+  .bienvenida-subtitulo { font-size: 0.88rem; color: rgba(255,255,255,0.75); position: relative; z-index: 1; }
+  .bienvenida-body { padding: 2rem 2.5rem; }
+  .bienvenida-intro { font-size: 0.92rem; line-height: 1.7; margin-bottom: 1.5rem; }
+  .bienvenida-intro strong { color: var(--azul); }
+
+  .bloques-preview { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem; }
+  .bloque-prev { background: var(--gris-claro); border-radius: 10px; padding: 0.85rem 1rem; }
+  .bloque-prev-num { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--celeste); margin-bottom: 0.2rem; }
+  .bloque-prev-nombre { font-size: 0.85rem; font-weight: 600; color: var(--azul); margin-bottom: 0.15rem; }
+  .bloque-prev-desc { font-size: 0.75rem; color: var(--gris-medio); }
+
+  .aviso { background: var(--celeste-claro); border-left: 3px solid var(--celeste); border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; font-size: 0.82rem; color: var(--azul); margin-bottom: 1.75rem; line-height: 1.5; }
+  .meta-chips { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .meta-chip { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--gris-medio); }
+
+  .btn-primary { background: var(--azul); color: var(--blanco); border: none; border-radius: 10px; padding: 0.9rem 2.5rem; font-size: 0.95rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-primary:hover { background: #00306A; transform: translateY(-1px); }
+  .btn-secondary { background: transparent; color: var(--azul); border: 1.5px solid var(--azul); border-radius: 8px; padding: 0.7rem 1.5rem; font-size: 0.88rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.15s; }
+  .btn-secondary:hover { background: var(--celeste-claro); }
+  .btn-secondary:disabled { opacity: 0.3; cursor: default; }
+
+  /* BLOQUES */
+  .bloque-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.75rem; }
+  .bloque-num { background: var(--azul); color: var(--blanco); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
+  .bloque-titulo-texto { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--azul); }
+  .bloque-desc { font-size: 0.82rem; color: var(--gris-medio); margin-top: 0.15rem; }
+
+  /* CARDS DE PREGUNTA */
+  .pregunta-card { background: var(--blanco); border-radius: 12px; padding: 1.4rem 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 6px rgba(0,61,124,0.06); border: 2px solid transparent; transition: border-color 0.2s; }
+  .pregunta-card.respondida { border-color: #C6E6F5; }
+  .pregunta-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gris-medio); margin-bottom: 0.5rem; }
+  .pregunta-texto { font-size: 0.95rem; font-weight: 500; line-height: 1.5; color: var(--gris-texto); margin-bottom: 1rem; }
+  .pregunta-hint { font-size: 0.78rem; color: var(--gris-medio); margin-bottom: 0.85rem; }
+
+  /* TABLA DE MATERIAS */
+  .tabla-materias { width: 100%; border-collapse: collapse; }
+  .tabla-materias th { font-size: 0.75rem; font-weight: 600; color: var(--gris-medio); text-transform: uppercase; letter-spacing: 0.05em; padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1.5px solid #E2E8F0; }
+  .tabla-materias td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #F0F4F8; font-size: 0.88rem; }
+  .tabla-materias tr:last-child td { border-bottom: none; font-weight: 600; background: var(--gris-claro); }
+  .tabla-materias tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  .tabla-materias tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+  .input-numero { width: 80px; padding: 0.45rem 0.65rem; border: 1.5px solid #E2E8F0; border-radius: 6px; font-size: 0.9rem; font-family: 'Inter', sans-serif; color: var(--gris-texto); text-align: center; transition: border-color 0.15s; }
+  .input-numero:focus { outline: none; border-color: var(--celeste); }
+  .total-display { font-size: 1rem; font-weight: 700; color: var(--azul); }
+
+  /* OPCIONES RADIO */
+  .opciones-radio { display: flex; flex-direction: column; gap: 0.5rem; }
+  .opcion-radio { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1rem; border-radius: 8px; border: 1.5px solid #E2E8F0; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; }
+  .opcion-radio:hover { border-color: var(--celeste); background: var(--celeste-claro); }
+  .opcion-radio.seleccionada { border-color: var(--celeste); background: var(--celeste-claro); color: var(--azul); font-weight: 500; }
+  .opcion-radio input[type="radio"] { display: none; }
+  .radio-circulo { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #CBD5E0; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .opcion-radio.seleccionada .radio-circulo { background: var(--celeste); border-color: var(--celeste); }
+  .radio-circulo::after { content:''; width:6px; height:6px; border-radius:50%; background:white; opacity:0; transition:opacity 0.15s; }
+  .opcion-radio.seleccionada .radio-circulo::after { opacity:1; }
+
+  /* OPCIONES CHECKBOX (selección múltiple) */
+  .opciones-check { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .opcion-check { display: flex; align-items: center; gap: 0.65rem; padding: 0.65rem 0.9rem; border-radius: 8px; border: 1.5px solid #E2E8F0; cursor: pointer; font-size: 0.85rem; transition: all 0.15s; }
+  .opcion-check:hover { border-color: var(--celeste); background: var(--celeste-claro); }
+  .opcion-check.seleccionada { border-color: var(--celeste); background: var(--celeste-claro); color: var(--azul); font-weight: 500; }
+  .opcion-check input[type="checkbox"] { display: none; }
+  .check-box { width: 17px; height: 17px; border-radius: 4px; border: 2px solid #CBD5E0; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .opcion-check.seleccionada .check-box { background: var(--celeste); border-color: var(--celeste); }
+  .check-box::after { content:'✓'; color:white; font-size:0.7rem; font-weight:700; opacity:0; transition:opacity 0.15s; }
+  .opcion-check.seleccionada .check-box::after { opacity:1; }
+
+  /* INPUT TEXTO LIBRE */
+  .textarea-libre { width: 100%; padding: 0.85rem 1rem; border: 1.5px solid #E2E8F0; border-radius: 8px; font-size: 0.9rem; font-family: 'Inter', sans-serif; color: var(--gris-texto); resize: vertical; min-height: 100px; transition: border-color 0.15s; line-height: 1.6; }
+  .textarea-libre:focus { outline: none; border-color: var(--celeste); }
+
+  /* INPUT NÚMERO SIMPLE */
+  .input-num-simple { padding: 0.6rem 0.9rem; border: 1.5px solid #E2E8F0; border-radius: 8px; font-size: 0.95rem; font-family: 'Inter', sans-serif; color: var(--gris-texto); width: 120px; transition: border-color 0.15s; }
+  .input-num-simple:focus { outline: none; border-color: var(--celeste); }
+
+  /* CONDICIONAL */
+  .condicional { display: none; margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px dashed #E2E8F0; }
+  .condicional.visible { display: block; }
+
+  /* NAV */
+  .nav-bloques { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #E2E8F0; }
+  .alerta { background: #FFF3CD; border: 1px solid var(--ambar); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.82rem; color: #7D5A0A; margin-top: 1rem; display: none; }
+
+  /* RESULTADOS */
+  .resultados-header { background: linear-gradient(135deg, #004E96 0%, #0070C0 100%); border-radius: 16px; padding: 2rem 2.5rem; color: var(--blanco); margin-bottom: 2rem; position: relative; overflow: hidden; }
+  .resultados-header::before { content:''; position:absolute; right:-30px; top:-30px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.05); }
+  .res-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+  .res-titulo { font-family: 'DM Serif Display', serif; font-size: 1.7rem; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+  .res-subtitulo { font-size: 0.88rem; color: rgba(255,255,255,0.75); position: relative; z-index: 1; }
+
+  .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .res-card { background: var(--blanco); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 2px 10px rgba(0,61,124,0.07); }
+  .res-card-titulo { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gris-medio); margin-bottom: 1rem; }
+  .res-fila { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid #F0F4F8; font-size: 0.85rem; }
+  .res-fila:last-child { border-bottom: none; }
+  .res-fila-label { color: var(--gris-medio); }
+  .res-fila-valor { font-weight: 600; color: var(--azul); }
+
+  .res-area-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .area-chip { background: var(--celeste-claro); color: var(--azul); border-radius: 20px; padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 500; }
+
+  .res-card-full { background: var(--blanco); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 2px 10px rgba(0,61,124,0.07); margin-bottom: 1rem; }
+
+  .indicador-pfc { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600; margin-bottom: 1rem; }
+
+  .cierre-card { background: var(--blanco); border-radius: 14px; padding: 2rem; margin-top: 1.5rem; box-shadow: 0 2px 12px rgba(0,61,124,0.07); border-top: 4px solid var(--celeste); }
+  .cierre-titulo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--azul); margin-bottom: 0.75rem; }
+  .cierre-texto { font-size: 0.88rem; line-height: 1.7; color: var(--gris-texto); }
+
+  @media (max-width: 600px) {
+    .header { padding: 1rem; }
+    .bienvenida-hero { padding: 1.75rem 1.5rem 1.5rem; }
+    .bienvenida-body { padding: 1.5rem; }
+    .bloques-preview { grid-template-columns: 1fr; }
+    .opciones-check { grid-template-columns: 1fr; }
+    .res-grid { grid-template-columns: 1fr; }
+    .container { padding: 1rem 1rem 3rem; }
+    .progress-bar-wrap { width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo"><img src="data:image/png;base64,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" alt="UTN FRSF" style="height:32px;width:auto;display:block"></div>
+    <span class="header-badge">PFC · Ing. Civil</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">Bloque 1 de 3</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- BIENVENIDA -->
+  <div class="screen active" id="screen-bienvenida">
+    <div class="bienvenida-card">
+      <div class="bienvenida-hero">
+        <div class="bienvenida-eyebrow">Proyecto Final de Carrera · Diagnóstico inicial</div>
+        <img src="data:image/png;base64,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" alt="UTN FRSF" style="height:28px;width:auto;display:block;margin-bottom:1rem;opacity:0.9"><h1 class="bienvenida-titulo">Sondeo de situación<br>académica y expectativas</h1>
+        <p class="bienvenida-subtitulo">Ingeniería Civil · Plan 2023 · UTN FRSF</p>
+      </div>
+      <div class="bienvenida-body">
+        <p class="bienvenida-intro">
+          Este sondeo permite que la cátedra conozca el <strong>estado académico real del grupo</strong> y las <strong>expectativas sobre el Proyecto Final de Carrera</strong>, para adaptar la propuesta pedagógica a las distintas situaciones que conviven en la cursada.<br><br>
+          Sabemos que no todos llegan al PFC en el mismo momento de la carrera: algunos pueden empezar a trabajar en su proyecto este año, mientras otros todavía tienen materias por cursar o aprobar. Ambas situaciones son válidas — la cátedra diseña estrategias para acompañar cada trayectoria.
+        </p>
+
+        <div class="bloques-preview">
+          <div class="bloque-prev">
+            <div class="bloque-prev-num">Bloque 1</div>
+            <div class="bloque-prev-nombre">Situación académica</div>
+            <div class="bloque-prev-desc">Materias pendientes, electivas y PPS</div>
+          </div>
+          <div class="bloque-prev">
+            <div class="bloque-prev-num">Bloque 2</div>
+            <div class="bloque-prev-nombre">Expectativas del PFC</div>
+            <div class="bloque-prev-desc">Tema, área y timing del proyecto</div>
+          </div>
+          <div class="bloque-prev">
+            <div class="bloque-prev-num">Bloque 3</div>
+            <div class="bloque-prev-nombre">Expectativas de la cursada</div>
+            <div class="bloque-prev-desc">¿Qué esperás llevarte este año?</div>
+          </div>
+        </div>
+
+        <div class="aviso">
+          🔒 <strong>Este sondeo es anónimo.</strong> No incluyas tu nombre ni ningún dato que permita identificarte. La cátedra accede únicamente a datos agregados del grupo para adaptar la propuesta pedagógica. No tiene incidencia en tu calificación.
+        </div>
+
+        <div class="meta-chips">
+          <div class="meta-chip">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-width="2" d="M12 6v6l4 2"/></svg>
+            ~5 minutos
+          </div>
+          <div class="meta-chip">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            10 preguntas
+          </div>
+          <div class="meta-chip">
+            <svg width="14" height="none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            Completamente anónimo
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="mostrarBloque(1)">
+          Comenzar
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2.5" d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 1: SITUACIÓN ACADÉMICA -->
+  <div class="screen" id="screen-bloque1">
+    <div class="bloque-header">
+      <div class="bloque-num">1</div>
+      <div>
+        <div class="bloque-titulo-texto">Situación académica</div>
+        <div class="bloque-desc">Tu estado actual en el plan de estudios</div>
+      </div>
+    </div>
+
+    <!-- P1: Pendientes de aprobación -->
+    <div class="pregunta-card" id="card-p1">
+      <div class="pregunta-label">Pregunta 1</div>
+      <div class="pregunta-texto">¿Cuántas materias tenés pendientes de <strong>aprobación</strong> (final rendido pendiente o materia no aprobada)?</div>
+      <div class="pregunta-hint">Indicá la cantidad por año del plan, a partir de 3° año.</div>
+      <table class="tabla-materias">
+        <thead><tr><th>Año</th><th>Cantidad de materias</th></tr></thead>
+        <tbody>
+          <tr><td>3° año</td><td><input class="input-numero" type="number" min="0" max="20" value="" id="p1_3" oninput="actualizarTotal('p1')" placeholder="0"></td></tr>
+          <tr><td>4° año</td><td><input class="input-numero" type="number" min="0" max="20" value="" id="p1_4" oninput="actualizarTotal('p1')" placeholder="0"></td></tr>
+          <tr><td>5° año</td><td><input class="input-numero" type="number" min="0" max="20" value="" id="p1_5" oninput="actualizarTotal('p1')" placeholder="0"></td></tr>
+          <tr><td><strong>Total</strong></td><td><span class="total-display" id="total_p1">0</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- P2: Pendientes de cursar -->
+    <div class="pregunta-card" id="card-p2">
+      <div class="pregunta-label">Pregunta 2</div>
+      <div class="pregunta-texto">¿Cuántas materias tenés pendientes de <strong>cursar</strong> (nunca cursadas)?</div>
+      <div class="pregunta-hint">Indicá la cantidad por año del plan, a partir de 4° año.</div>
+      <table class="tabla-materias">
+        <thead><tr><th>Año</th><th>Cantidad de materias</th></tr></thead>
+        <tbody>
+          <tr><td>4° año</td><td><input class="input-numero" type="number" min="0" max="20" value="" id="p2_4" oninput="actualizarTotal('p2')" placeholder="0"></td></tr>
+          <tr><td>5° año</td><td><input class="input-numero" type="number" min="0" max="20" value="" id="p2_5" oninput="actualizarTotal('p2')" placeholder="0"></td></tr>
+          <tr><td><strong>Total</strong></td><td><span class="total-display" id="total_p2">0</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- P3: Materias en curso -->
+    <div class="pregunta-card" id="card-p3">
+      <div class="pregunta-label">Pregunta 3</div>
+      <div class="pregunta-texto">¿Cuántas materias estás cursando <strong>actualmente</strong> este cuatrimestre?</div>
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-top:0.25rem">
+        <input class="input-num-simple" type="number" min="0" max="15" id="p3" oninput="checkCard('card-p3', this.value !== '')" placeholder="0">
+        <span style="font-size:0.85rem;color:var(--gris-medio)">materias (incluyendo el PFC)</span>
+      </div>
+    </div>
+
+    <!-- P4: Electivas -->
+    <div class="pregunta-card" id="card-p4">
+      <div class="pregunta-label">Pregunta 4</div>
+      <div class="pregunta-texto">Materias <strong>electivas</strong></div>
+      <div class="pregunta-hint">El plan 2023 exige un mínimo de <strong>11 horas cátedra</strong> de materias electivas aprobadas para la defensa del PFC.</div>
+
+      <div style="margin-bottom:1rem">
+        <div style="font-size:0.83rem;font-weight:600;color:var(--gris-texto);margin-bottom:0.5rem">¿Cuántas horas cátedra de electivas tenés aprobadas hasta ahora?</div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <input class="input-num-simple" type="number" min="0" max="30" id="p4_hs_aprobadas" oninput="checkElectivas()" placeholder="0">
+          <span style="font-size:0.85rem;color:var(--gris-medio)">horas cátedra</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:0.75rem">
+        <div style="font-size:0.83rem;font-weight:600;color:var(--gris-texto);margin-bottom:0.5rem">¿Tenés alguna materia electiva en curso este cuatrimestre?</div>
+        <div class="opciones-radio" id="opciones-p4b">
+          <label class="opcion-radio" onclick="seleccionarRadio('p4b', 'si', this); mostrarCondicional('cond-p4c', true)">
+            <input type="radio" name="p4b" value="si"><div class="radio-circulo"></div>Sí
+          </label>
+          <label class="opcion-radio" onclick="seleccionarRadio('p4b', 'no', this); mostrarCondicional('cond-p4c', false)">
+            <input type="radio" name="p4b" value="no"><div class="radio-circulo"></div>No
+          </label>
+        </div>
+      </div>
+
+      <div class="condicional" id="cond-p4c">
+        <div style="font-size:0.83rem;font-weight:600;color:var(--gris-texto);margin-bottom:0.5rem">¿Cuántas horas cátedra suman las electivas que estás cursando?</div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <input class="input-num-simple" type="number" min="1" max="20" id="p4_hs_cursando" oninput="checkElectivas()" placeholder="0">
+          <span style="font-size:0.85rem;color:var(--gris-medio)">horas cátedra</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- P5: PPS -->
+    <div class="pregunta-card" id="card-p5">
+      <div class="pregunta-label">Pregunta 5</div>
+      <div class="pregunta-texto">¿En qué estado se encuentra tu <strong>Práctica Profesional Supervisada (PPS)</strong>?</div>
+      <div class="opciones-radio">
+        <label class="opcion-radio" onclick="seleccionarRadio('p5', 'aprobada', this)"><input type="radio" name="p5" value="aprobada"><div class="radio-circulo"></div>Aprobada</label>
+        <label class="opcion-radio" onclick="seleccionarRadio('p5', 'en_curso', this)"><input type="radio" name="p5" value="en_curso"><div class="radio-circulo"></div>En curso</label>
+        <label class="opcion-radio" onclick="seleccionarRadio('p5', 'no_iniciada', this)"><input type="radio" name="p5" value="no_iniciada"><div class="radio-circulo"></div>No iniciada</label>
+      </div>
+    </div>
+
+    <div class="alerta" id="alerta-b1">⚠️ Por favor completá todos los campos antes de continuar.</div>
+    <div class="nav-bloques">
+      <button class="btn-secondary" disabled>← Anterior</button>
+      <button class="btn-primary" onclick="avanzarBloque(1)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 2: EXPECTATIVAS PFC -->
+  <div class="screen" id="screen-bloque2">
+    <div class="bloque-header">
+      <div class="bloque-num">2</div>
+      <div>
+        <div class="bloque-titulo-texto">Expectativas sobre el PFC</div>
+        <div class="bloque-desc">Tu horizonte temporal y área de interés</div>
+      </div>
+    </div>
+
+    <!-- P6: Timing -->
+    <div class="pregunta-card" id="card-p6">
+      <div class="pregunta-label">Pregunta 6</div>
+      <div class="pregunta-texto">¿En qué momento estimás que podrás trabajar activamente en tu Proyecto Final de Carrera?</div>
+      <div class="opciones-radio">
+        <label class="opcion-radio" onclick="seleccionarRadio('p6', '2026', this)"><input type="radio" name="p6" value="2026"><div class="radio-circulo"></div>Este año (2026)</label>
+        <label class="opcion-radio" onclick="seleccionarRadio('p6', '2027', this)"><input type="radio" name="p6" value="2027"><div class="radio-circulo"></div>En 2027</label>
+        <label class="opcion-radio" onclick="seleccionarRadio('p6', '2028+', this)"><input type="radio" name="p6" value="2028+"><div class="radio-circulo"></div>En 2028 o después</label>
+        <label class="opcion-radio" onclick="seleccionarRadio('p6', 'no_se', this)"><input type="radio" name="p6" value="no_se"><div class="radio-circulo"></div>No lo sé todavía</label>
+      </div>
+    </div>
+
+    <!-- P7: Idea de tema -->
+    <div class="pregunta-card" id="card-p7">
+      <div class="pregunta-label">Pregunta 7</div>
+      <div class="pregunta-texto">¿Ya tenés un tema o problemática en mente para tu PFC?</div>
+      <div class="opciones-radio">
+        <label class="opcion-radio" onclick="seleccionarRadio('p7', 'concreta', this); mostrarCondicional('cond-p9', true)"><input type="radio" name="p7" value="concreta"><div class="radio-circulo"></div>Sí, tengo una idea concreta</label>
+        <label class="opcion-radio" onclick="seleccionarRadio('p7', 'general', this); mostrarCondicional('cond-p9', false)"><input type="radio" name="p7" value="general"><div class="radio-circulo"></div>Tengo una idea general</label>
+        <label class="opcion-radio" onclick="seleccionarRadio('p7', 'no', this); mostrarCondicional('cond-p9', false)"><input type="radio" name="p7" value="no"><div class="radio-circulo"></div>No tengo idea todavía</label>
+      </div>
+    </div>
+
+    <!-- P8: Área de interés -->
+    <div class="pregunta-card" id="card-p8">
+      <div class="pregunta-label">Pregunta 8</div>
+      <div class="pregunta-texto">¿En qué área o áreas te interesaría enmarcar tu PFC?</div>
+      <div class="pregunta-hint">Podés elegir más de una opción, independientemente de si ya tenés tema definido.</div>
+      <div class="opciones-check" id="opciones-p8">
+        <label class="opcion-check"><input type="checkbox" name="p8" value="vialidad" onchange="toggleCheckNativo(this)"><div class="check-box"></div>Vialidad y transporte</label>
+        <label class="opcion-check"><input type="checkbox" name="p8" value="hidraulica" onchange="toggleCheckNativo(this)"><div class="check-box"></div>Hidráulica y recursos hídricos</label>
+        <label class="opcion-check"><input type="checkbox" name="p8" value="agua_saneamiento" onchange="toggleCheckNativo(this)"><div class="check-box"></div>Agua potable y saneamiento</label>
+        <label class="opcion-check"><input type="checkbox" name="p8" value="estructuras" onchange="toggleCheckNativo(this)"><div class="check-box"></div>Estructuras</label>
+        <label class="opcion-check"><input type="checkbox" name="p8" value="urbanismo" onchange="toggleCheckNativo(this)"><div class="check-box"></div>Urbanismo y planeamiento</label>
+        <label class="opcion-check"><input type="checkbox" name="p8" value="ambiental" onchange="toggleCheckNativo(this)"><div class="check-box"></div>Gestión ambiental</label>
+        <label class="opcion-check" style="grid-column:1/-1"><input type="checkbox" name="p8" value="otra" onchange="toggleCheckNativo(this); mostrarCondicional('cond-p8-otra', this.checked)"><div class="check-box"></div>Otra</label>
+      </div>
+      <div class="condicional" id="cond-p8-otra" style="margin-top:0.75rem">
+        <input type="text" id="p8_otra_texto" placeholder="¿Cuál?" oninput="respuestas['p8_otra'] = this.value"
+          style="width:100%;padding:0.6rem 0.9rem;border:1.5px solid #E2E8F0;border-radius:8px;font-size:0.9rem;font-family:'Inter',sans-serif;color:var(--gris-texto);transition:border-color 0.15s"
+          onfocus="this.style.borderColor='var(--celeste)'" onblur="this.style.borderColor='#E2E8F0'">
+      </div>
+    </div>
+
+    <!-- P9: Director (condicional) -->
+    <div class="condicional" id="cond-p9" style="margin-bottom:0">
+      <div class="pregunta-card" id="card-p9" style="margin-bottom:0">
+        <div class="pregunta-label">Pregunta 9</div>
+        <div class="pregunta-texto">¿Ya tenés director/a de PFC contactado o asignado?</div>
+        <div class="opciones-radio">
+          <label class="opcion-radio" onclick="seleccionarRadio('p9', 'definido', this)"><input type="radio" name="p9" value="definido"><div class="radio-circulo"></div>Sí, ya definido/a</label>
+          <label class="opcion-radio" onclick="seleccionarRadio('p9', 'en_conversacion', this)"><input type="radio" name="p9" value="en_conversacion"><div class="radio-circulo"></div>En conversación</label>
+          <label class="opcion-radio" onclick="seleccionarRadio('p9', 'no', this)"><input type="radio" name="p9" value="no"><div class="radio-circulo"></div>No todavía</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="alerta" id="alerta-b2">⚠️ Por favor respondé las preguntas obligatorias antes de continuar.</div>
+    <div class="nav-bloques">
+      <button class="btn-secondary" onclick="mostrarBloque(1)">← Anterior</button>
+      <button class="btn-primary" onclick="avanzarBloque(2)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 3: EXPECTATIVAS CURSADA -->
+  <div class="screen" id="screen-bloque3">
+    <div class="bloque-header">
+      <div class="bloque-num">3</div>
+      <div>
+        <div class="bloque-titulo-texto">Expectativas de la cursada</div>
+        <div class="bloque-desc">¿Qué esperás llevarte de este año en el PFC?</div>
+      </div>
+    </div>
+
+    <div class="pregunta-card" id="card-p10">
+      <div class="pregunta-label">Pregunta 10</div>
+      <div class="pregunta-texto">¿Qué esperás llevarte de la cursada del PFC este año?</div>
+      <div class="pregunta-hint">Respondé con tus propias palabras. No hay respuestas correctas ni incorrectas.</div>
+      <textarea class="textarea-libre" id="p10" placeholder="Escribí aquí tu respuesta..." oninput="checkCard('card-p10', this.value.trim().length > 0)"></textarea>
+    </div>
+
+    <div class="alerta" id="alerta-b3">⚠️ Por favor escribí tu respuesta antes de enviar.</div>
+    <div class="nav-bloques">
+      <button class="btn-secondary" onclick="mostrarBloque(2)">← Anterior</button>
+      <button class="btn-primary" onclick="enviarSondeo()">
+        Ver mi resumen
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2.5" d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- RESULTADOS -->
+  <div class="screen" id="screen-resultados">
+    <div class="resultados-header">
+      <div class="res-eyebrow">Resumen de tu sondeo</div>
+      <h2 class="res-titulo">Tu situación académica</h2>
+      <p class="res-subtitulo">PFC Ingeniería Civil · UTN FRSF · 2026</p>
+      <button class="btn-primary" onclick="imprimirResumen()" style="margin-top:1rem;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.4);font-size:0.82rem;padding:0.6rem 1.25rem">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Guardar / Imprimir resumen
+      </button>
+    </div>
+
+    <div id="indicador-pfc-wrap" style="margin-bottom:1.5rem"></div>
+
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-card-titulo">Materias pendientes</div>
+        <div class="res-fila"><span class="res-fila-label">Pendientes de aprobación</span><span class="res-fila-valor" id="r-pend-aprobacion">—</span></div>
+        <div class="res-fila"><span class="res-fila-label">Pendientes de cursar</span><span class="res-fila-valor" id="r-pend-cursar">—</span></div>
+        <div class="res-fila"><span class="res-fila-label">Cursando actualmente</span><span class="res-fila-valor" id="r-cursando">—</span></div>
+      </div>
+      <div class="res-card">
+        <div class="res-card-titulo">Requisitos de egreso</div>
+        <div class="res-fila"><span class="res-fila-label">Hs. electivas aprobadas</span><span class="res-fila-valor" id="r-elec-aprobadas">—</span></div>
+        <div class="res-fila"><span class="res-fila-label">Hs. electivas en curso</span><span class="res-fila-valor" id="r-elec-cursando">—</span></div>
+        <div class="res-fila"><span class="res-fila-label">Estado PPS</span><span class="res-fila-valor" id="r-pps">—</span></div>
+      </div>
+    </div>
+
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-card-titulo">Expectativas del PFC</div>
+        <div class="res-fila"><span class="res-fila-label">Inicio estimado del PFC</span><span class="res-fila-valor" id="r-timing">—</span></div>
+        <div class="res-fila"><span class="res-fila-label">Idea de tema</span><span class="res-fila-valor" id="r-idea">—</span></div>
+        <div class="res-fila" id="fila-director" style="display:none"><span class="res-fila-label">Director/a</span><span class="res-fila-valor" id="r-director">—</span></div>
+      </div>
+      <div class="res-card">
+        <div class="res-card-titulo">Áreas de interés</div>
+        <div id="r-areas" class="res-area-chips" style="margin-top:0.25rem"></div>
+      </div>
+    </div>
+
+    <div class="res-card-full">
+      <div class="res-card-titulo">Lo que esperás de la cursada</div>
+      <p style="font-size:0.9rem;line-height:1.7;color:var(--gris-texto);font-style:italic" id="r-expectativa">—</p>
+    </div>
+
+    <div class="cierre-card">
+      <h3 class="cierre-titulo">¿Para qué usa la cátedra esta información?</h3>
+      <p class="cierre-texto">
+        El sondeo le permite a la cátedra conocer la distribución real del grupo: cuántos estudiantes pueden trabajar activamente en su PFC este año, cuántos aún tienen materias por resolver, y qué áreas concentran el mayor interés.<br><br>
+        Con esa información, la propuesta pedagógica se adapta: quienes están en condiciones de iniciar su PFC reciben acompañamiento directo en la formulación de su proyecto real; quienes todavía no están en esa instancia desarrollan un <strong>proyecto tipo</strong> en un área de su interés, que les permite poner en práctica todos los conceptos metodológicos que luego aplicarán en su proyecto final.<br><br>
+        Gracias por tomarte el tiempo de responder.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// =============================================
+// ESTADO
+// =============================================
+const respuestas = {};
+const checkboxSeleccionados = { p8: [] };
+
+// =============================================
+// NAVEGACIÓN
+// =============================================
+function mostrarBloque(num) {
+  ['bienvenida','bloque1','bloque2','bloque3','resultados'].forEach(id => {
+    document.getElementById('screen-' + id).classList.remove('active');
+  });
+  if (num === 0) document.getElementById('screen-bienvenida').classList.add('active');
+  else document.getElementById('screen-bloque' + num).classList.add('active');
+  actualizarProgress(num);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function actualizarProgress(bloque) {
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+  const pcts = { 0: 0, 1: 33, 2: 66, 3: 90, 4: 100 };
+  fill.style.width = (pcts[bloque] || 0) + '%';
+  if (bloque >= 1 && bloque <= 3) label.textContent = `Bloque ${bloque} de 3`;
+  else if (bloque === 4) label.textContent = 'Completado';
+  else label.textContent = '';
+}
+
+// =============================================
+// CONTROLES DE FORMULARIO
+// =============================================
+function actualizarTotal(pregunta) {
+  const ids = pregunta === 'p1' ? ['p1_3','p1_4','p1_5'] : ['p2_4','p2_5'];
+  let total = 0;
+  ids.forEach(id => {
+    const val = parseInt(document.getElementById(id).value) || 0;
+    total += val;
+  });
+  document.getElementById('total_' + pregunta).textContent = total;
+  respuestas[pregunta] = total;
+  checkCard('card-' + pregunta, true);
+}
+
+function seleccionarRadio(nombre, valor, labelEl) {
+  respuestas[nombre] = valor;
+  document.querySelectorAll(`[name="${nombre}"]`).forEach(input => {
+    input.closest('.opcion-radio').classList.remove('seleccionada');
+  });
+  labelEl.classList.add('seleccionada');
+  // marcar card padre como respondida
+  const card = labelEl.closest('.pregunta-card');
+  if (card) card.classList.add('respondida');
+}
+
+function toggleCheckNativo(input) {
+  const labelEl = input.closest('.opcion-check');
+  const valor = input.value;
+  const arr = checkboxSeleccionados['p8'];
+  if (input.checked) {
+    labelEl.classList.add('seleccionada');
+    if (!arr.includes(valor)) arr.push(valor);
+  } else {
+    labelEl.classList.remove('seleccionada');
+    const idx = arr.indexOf(valor);
+    if (idx !== -1) arr.splice(idx, 1);
+  }
+  respuestas['p8'] = [...arr];
+  const card = document.getElementById('card-p8');
+  if (card) card.classList.toggle('respondida', arr.length > 0);
+}
+
+function toggleCheck(labelEl, nombre, valor) {
+  const arr = checkboxSeleccionados[nombre];
+  const idx = arr.indexOf(valor);
+  if (idx === -1) { arr.push(valor); labelEl.classList.add('seleccionada'); }
+  else { arr.splice(idx, 1); labelEl.classList.remove('seleccionada'); }
+  respuestas[nombre] = [...arr];
+  const card = labelEl.closest('.pregunta-card');
+  if (card) card.classList.toggle('respondida', arr.length > 0);
+}
+
+function mostrarCondicional(id, mostrar) {
+  const el = document.getElementById(id);
+  if (mostrar) el.classList.add('visible');
+  else { el.classList.remove('visible'); }
+}
+
+function checkCard(cardId, condicion) {
+  const card = document.getElementById(cardId);
+  if (card) card.classList.toggle('respondida', !!condicion);
+}
+
+function checkElectivas() {
+  const hs = document.getElementById('p4_hs_aprobadas').value;
+  respuestas['p4_hs_aprobadas'] = hs;
+  checkCard('card-p4', hs !== '');
+}
+
+// =============================================
+// VALIDACIÓN Y AVANCE
+// =============================================
+function avanzarBloque(bloque) {
+  const alertaId = 'alerta-b' + bloque;
+  document.getElementById(alertaId).style.display = 'none';
+
+  if (bloque === 1) {
+    const p3 = document.getElementById('p3').value;
+    const p4hs = document.getElementById('p4_hs_aprobadas').value;
+    const p4b = respuestas['p4b'];
+    const p5 = respuestas['p5'];
+    if (!p3 || !p4hs || !p4b || !p5) {
+      document.getElementById(alertaId).style.display = 'block';
+      return;
+    }
+    respuestas['p3'] = parseInt(p3);
+    respuestas['p4_hs_aprobadas'] = parseInt(p4hs);
+    if (p4b === 'si') {
+      const p4c = document.getElementById('p4_hs_cursando').value;
+      if (!p4c) { document.getElementById(alertaId).style.display = 'block'; return; }
+      respuestas['p4_hs_cursando'] = parseInt(p4c);
+    }
+    mostrarBloque(2);
+  }
+
+  if (bloque === 2) {
+    const p6 = respuestas['p6'];
+    const p7 = respuestas['p7'];
+    const p8 = respuestas['p8'];
+    if (!p6 || !p7 || !p8 || p8.length === 0) {
+      document.getElementById(alertaId).style.display = 'block';
+      return;
+    }
+    mostrarBloque(3);
+  }
+}
+
+function enviarSondeo() {
+  const p10 = document.getElementById('p10').value.trim();
+  if (!p10) {
+    document.getElementById('alerta-b3').style.display = 'block';
+    return;
+  }
+  respuestas['p10'] = p10;
+  mostrarResultados();
+}
+
+// =============================================
+// RESULTADOS
+// =============================================
+function mostrarResultados() {
+  actualizarProgress(4);
+  ['screen-bloque3'].forEach(id => document.getElementById(id).classList.remove('active'));
+  document.getElementById('screen-resultados').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const r = respuestas;
+
+  // Totales materias
+  const totalAprobacion = (parseInt(document.getElementById('p1_3').value)||0) +
+                          (parseInt(document.getElementById('p1_4').value)||0) +
+                          (parseInt(document.getElementById('p1_5').value)||0);
+  const totalCursar = (parseInt(document.getElementById('p2_4').value)||0) +
+                      (parseInt(document.getElementById('p2_5').value)||0);
+
+  document.getElementById('r-pend-aprobacion').textContent = totalAprobacion + (totalAprobacion === 1 ? ' materia' : ' materias');
+  document.getElementById('r-pend-cursar').textContent = totalCursar + (totalCursar === 1 ? ' materia' : ' materias');
+  document.getElementById('r-cursando').textContent = (r.p3 || 0) + (r.p3 === 1 ? ' materia' : ' materias');
+
+  // Electivas
+  const hsAprobadas = r.p4_hs_aprobadas || 0;
+  const hsFaltantes = Math.max(0, 11 - hsAprobadas);
+  document.getElementById('r-elec-aprobadas').textContent = hsAprobadas + ' hs (' + (hsFaltantes > 0 ? 'faltan ' + hsFaltantes + ' hs' : '✓ requisito cumplido') + ')';
+  document.getElementById('r-elec-cursando').textContent = r.p4b === 'si' ? (r.p4_hs_cursando || 0) + ' hs en curso' : 'No';
+
+  // PPS
+  const ppsLabels = { aprobada: '✓ Aprobada', en_curso: 'En curso', no_iniciada: 'No iniciada' };
+  document.getElementById('r-pps').textContent = ppsLabels[r.p5] || '—';
+
+  // Timing
+  const timingLabels = { '2026': 'Este año (2026)', '2027': 'En 2027', '2028+': 'En 2028 o después', 'no_se': 'No lo sé todavía' };
+  document.getElementById('r-timing').textContent = timingLabels[r.p6] || '—';
+
+  // Idea
+  const ideaLabels = { concreta: 'Sí, idea concreta', general: 'Idea general', no: 'No todavía' };
+  document.getElementById('r-idea').textContent = ideaLabels[r.p7] || '—';
+
+  // Director (condicional)
+  if (r.p7 === 'concreta') {
+    document.getElementById('fila-director').style.display = 'flex';
+    const dirLabels = { definido: 'Sí, ya definido/a', en_conversacion: 'En conversación', no: 'No todavía' };
+    document.getElementById('r-director').textContent = dirLabels[r.p9] || '—';
+  }
+
+  // Áreas
+  const areaLabels = { vialidad: 'Vialidad y transporte', hidraulica: 'Hidráulica y rec. hídricos', agua_saneamiento: 'Agua y saneamiento', estructuras: 'Estructuras', urbanismo: 'Urbanismo y planeamiento', ambiental: 'Gestión ambiental', otra: 'Otra' };
+  const areasContainer = document.getElementById('r-areas');
+  if (r.p8 && r.p8.length > 0) {
+    areasContainer.innerHTML = r.p8.map(a => {
+      if (a === 'otra' && r.p8_otra) return `<span class="area-chip">Otra: ${r.p8_otra}</span>`;
+      return `<span class="area-chip">${areaLabels[a] || a}</span>`;
+    }).join('');
+  } else {
+    areasContainer.innerHTML = '<span style="font-size:0.85rem;color:var(--gris-medio)">Sin especificar</span>';
+  }
+
+  // Expectativa
+  document.getElementById('r-expectativa').textContent = r.p10 || '—';
+
+  // Indicador situación PFC
+  const totalPend = totalAprobacion + totalCursar;
+  let indicadorHTML = '';
+  if (r.p6 === '2026' && totalPend <= 3) {
+    indicadorHTML = `<div class="indicador-pfc" style="background:var(--verde-claro);color:#1A6E3F">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      Estás en condiciones de trabajar en tu PFC este año
+    </div>`;
+  } else if (totalPend > 5 || r.p6 === '2028+') {
+    indicadorHTML = `<div class="indicador-pfc" style="background:var(--ambar-claro);color:#7D4A00">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      Trabajarás en un proyecto tipo mientras avanzás en las materias pendientes
+    </div>`;
+  } else {
+    indicadorHTML = `<div class="indicador-pfc" style="background:var(--celeste-claro);color:var(--azul)">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      La cátedra evaluará con vos el mejor camino según tu situación
+    </div>`;
+  }
+  document.getElementById('indicador-pfc-wrap').innerHTML = indicadorHTML;
+
+  guardarDatosAgregados();
+}
+
+// =============================================
+// IMPRESIÓN
+// =============================================
+function imprimirResumen() {
+  const r = respuestas;
+  const totalAprobacion = (parseInt(document.getElementById('p1_3').value)||0) + (parseInt(document.getElementById('p1_4').value)||0) + (parseInt(document.getElementById('p1_5').value)||0);
+  const totalCursar = (parseInt(document.getElementById('p2_4').value)||0) + (parseInt(document.getElementById('p2_5').value)||0);
+  const hsAprobadas = r.p4_hs_aprobadas || 0;
+  const hsFaltantes = Math.max(0, 11 - hsAprobadas);
+  const areaLabels = { vialidad: 'Vialidad y transporte', hidraulica: 'Hidráulica y rec. hídricos', agua_saneamiento: 'Agua y saneamiento', estructuras: 'Estructuras', urbanismo: 'Urbanismo y planeamiento', ambiental: 'Gestión ambiental', otra: 'Otra' };
+  const timingLabels = { '2026': 'Este año (2026)', '2027': 'En 2027', '2028+': 'En 2028 o después', 'no_se': 'No lo sé todavía' };
+  const ideaLabels = { concreta: 'Sí, idea concreta', general: 'Idea general', no: 'No todavía' };
+  const ppsLabels = { aprobada: 'Aprobada', en_curso: 'En curso', no_iniciada: 'No iniciada' };
+
+  const html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Sondeo PFC — UTN FRSF</title>
+  <style>body{font-family:Arial,sans-serif;max-width:680px;margin:2rem auto;padding:0 1.5rem;color:#2D3748}h1{color:#003D7C;font-size:1.3rem;margin-bottom:.25rem}.sub{color:#8896A8;font-size:.85rem;margin-bottom:1.5rem}.sec{margin-bottom:1.5rem;border:1.5px solid #E2E8F0;border-radius:8px;overflow:hidden}.sec-titulo{background:#F2F5F9;padding:.6rem 1rem;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8896A8}.fila{display:flex;justify-content:space-between;padding:.5rem 1rem;border-bottom:1px solid #F0F4F8;font-size:.88rem}.fila:last-child{border:none}.fila-label{color:#8896A8}.fila-val{font-weight:600;color:#003D7C}.texto-libre{padding:1rem;font-size:.88rem;line-height:1.7;font-style:italic}.aviso{background:#E8F4FD;border-left:3px solid #0070C0;padding:.75rem 1rem;font-size:.78rem;color:#003D7C;margin-top:1.5rem;border-radius:0 6px 6px 0}</style>
+  </head><body>
+  <h1>Sondeo de situación académica y expectativas</h1>
+  <div class="sub">PFC Ingeniería Civil · UTN FRSF · ${new Date().toLocaleDateString('es-AR',{year:'numeric',month:'long',day:'numeric'})}</div>
+  <div class="sec"><div class="sec-titulo">Situación académica</div>
+    <div class="fila"><span class="fila-label">Pendientes de aprobación</span><span class="fila-val">${totalAprobacion} materias</span></div>
+    <div class="fila"><span class="fila-label">Pendientes de cursar</span><span class="fila-val">${totalCursar} materias</span></div>
+    <div class="fila"><span class="fila-label">Cursando actualmente</span><span class="fila-val">${r.p3||0} materias</span></div>
+    <div class="fila"><span class="fila-label">Hs. electivas aprobadas</span><span class="fila-val">${hsAprobadas} hs ${hsFaltantes>0?'(faltan '+hsFaltantes+' hs)':'(requisito cumplido)'}</span></div>
+    <div class="fila"><span class="fila-label">Electivas en curso</span><span class="fila-val">${r.p4b==='si'?(r.p4_hs_cursando||0)+' hs':'No'}</span></div>
+    <div class="fila"><span class="fila-label">PPS</span><span class="fila-val">${ppsLabels[r.p5]||'—'}</span></div>
+  </div>
+  <div class="sec"><div class="sec-titulo">Expectativas del PFC</div>
+    <div class="fila"><span class="fila-label">Inicio estimado</span><span class="fila-val">${timingLabels[r.p6]||'—'}</span></div>
+    <div class="fila"><span class="fila-label">Idea de tema</span><span class="fila-val">${ideaLabels[r.p7]||'—'}</span></div>
+    <div class="fila"><span class="fila-label">Áreas de interés</span><span class="fila-val">${(r.p8||[]).map(a=>areaLabels[a]||a).join(', ')||'—'}</span></div>
+    ${r.p7==='concreta'?`<div class="fila"><span class="fila-label">Director/a</span><span class="fila-val">${{definido:'Definido/a',en_conversacion:'En conversación',no:'No todavía'}[r.p9]||'—'}</span></div>`:''}
+  </div>
+  <div class="sec"><div class="sec-titulo">Lo que esperás de la cursada</div><div class="texto-libre">"${r.p10||'—'}"</div></div>
+  <div class="aviso">Este resumen es personal. La cátedra accede únicamente a datos agregados del grupo, sin identificadores individuales.</div>
+  </body></html>`;
+
+  const ventana = window.open('', '_blank');
+  ventana.document.write(html);
+  ventana.document.close();
+  setTimeout(() => ventana.print(), 500);
+}
+
+// =============================================
+// ALMACENAMIENTO ANÓNIMO AGREGADO
+// =============================================
+async function guardarDatosAgregados() {
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwpYUBo0iNqcxs4rathubY4iMxBIyIPcF8xdgVt7C_vJqv4eapzWcUW2Kxi4wGq_0z4/exec';
+  try {
+    const r = respuestas;
+    const p1_3 = parseInt(document.getElementById('p1_3').value)||0;
+    const p1_4 = parseInt(document.getElementById('p1_4').value)||0;
+    const p1_5 = parseInt(document.getElementById('p1_5').value)||0;
+    const p2_4 = parseInt(document.getElementById('p2_4').value)||0;
+    const p2_5 = parseInt(document.getElementById('p2_5').value)||0;
+    const payload = {
+      tipo: 'Sondeo',
+      anio: '2026',
+      pend_aprobacion_3: p1_3,
+      pend_aprobacion_4: p1_4,
+      pend_aprobacion_5: p1_5,
+      total_pend_aprobacion: p1_3 + p1_4 + p1_5,
+      pend_cursar_4: p2_4,
+      pend_cursar_5: p2_5,
+      total_pend_cursar: p2_4 + p2_5,
+      cursando: r.p3 || 0,
+      hs_electivas_aprobadas: r.p4_hs_aprobadas || 0,
+      electivas_en_curso: r.p4b || '',
+      hs_electivas_cursando: r.p4_hs_cursando || 0,
+      pps: r.p5 || '',
+      timing_pfc: r.p6 || '',
+      idea_tema: r.p7 || '',
+      areas: Array.isArray(r.p8) ? r.p8.join(', ') : '',
+      director: r.p9 || '',
+      expectativa: r.p10 || ''
+    };
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) {
+    // Silencioso
+  }
+}
+</script>
+</body>
+</html>

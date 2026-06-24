@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Índice de Estilos de Aprendizaje — PFC UTN FRSF</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap');
+
+  :root {
+    --azul: #003D7C;
+    --celeste: #0070C0;
+    --celeste-claro: #E8F4FD;
+    --gris-claro: #F2F5F9;
+    --gris-medio: #8896A8;
+    --gris-texto: #2D3748;
+    --blanco: #ffffff;
+    --verde: #27AE60;
+    --ambar: #F5A623;
+    --rojo-suave: #C0392B;
+    --activo-color: #0070C0;
+    --reflexivo-color: #6B46C1;
+    --sensorial-color: #27AE60;
+    --intuitivo-color: #E67E22;
+    --visual-color: #2980B9;
+    --verbal-color: #8E44AD;
+    --secuencial-color: #16A085;
+    --global-color: #C0392B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--gris-claro);
+    color: var(--gris-texto);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--azul);
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,61,124,0.18);
+  }
+  .header-left { display: flex; align-items: center; gap: 1rem; }
+  .header-logo {
+    font-family: 'DM Serif Display', serif;
+    color: var(--blanco);
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+  .header-logo span { color: var(--celeste); font-style: italic; }
+  .header-badge {
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.8);
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .progress-bar-wrap {
+    width: 200px;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--celeste);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.72rem;
+    margin-top: 0.25rem;
+    text-align: right;
+  }
+
+  /* CONTENEDOR PRINCIPAL */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* PANTALLAS */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* PANTALLA BIENVENIDA */
+  .bienvenida-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,61,124,0.08);
+  }
+  .bienvenida-hero {
+    background: linear-gradient(135deg, var(--azul) 0%, var(--celeste) 100%);
+    padding: 2.5rem 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .bienvenida-hero::before {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .bienvenida-hero::after {
+    content: '';
+    position: absolute;
+    right: 40px; bottom: -60px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .bienvenida-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 0.75rem;
+  }
+  .bienvenida-titulo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--blanco);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .bienvenida-subtitulo {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    position: relative;
+    z-index: 1;
+  }
+  .bienvenida-body { padding: 2rem 2.5rem; }
+  .bienvenida-intro {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--gris-texto);
+    margin-bottom: 1.5rem;
+  }
+  .bienvenida-intro strong { color: var(--azul); }
+
+  .dimensiones-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+  .dim-chip {
+    background: var(--gris-claro);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.82rem;
+  }
+  .dim-chip-label {
+    font-weight: 600;
+    color: var(--azul);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2rem;
+  }
+  .dim-chip-desc { color: var(--gris-medio); font-size: 0.8rem; }
+
+  .aviso-anonimato {
+    background: var(--celeste-claro);
+    border-left: 3px solid var(--celeste);
+    border-radius: 0 8px 8px 0;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.82rem;
+    color: var(--azul);
+    margin-bottom: 1.75rem;
+    line-height: 1.5;
+  }
+
+  .meta-chips {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .meta-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--gris-medio);
+  }
+  .meta-chip svg { flex-shrink: 0; }
+
+  .btn-primary {
+    background: var(--azul);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem 2.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover { background: #00306A; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  /* PANTALLA PREGUNTAS */
+  .bloque-titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .bloque-numero {
+    background: var(--azul);
+    color: var(--blanco);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .bloque-nombre {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--azul);
+  }
+  .bloque-descripcion {
+    font-size: 0.82rem;
+    color: var(--gris-medio);
+    margin-top: 0.15rem;
+  }
+
+  .pregunta-card {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.85rem;
+    box-shadow: 0 1px 6px rgba(0,61,124,0.06);
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .pregunta-card.respondida { border-color: #C6E6F5; }
+
+  .pregunta-numero {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gris-medio);
+    margin-bottom: 0.6rem;
+  }
+  .pregunta-texto {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--gris-texto);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .opciones { display: flex; flex-direction: column; gap: 0.5rem; }
+  .opcion-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: 1.5px solid #E2E8F0;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+  .opcion-label:hover { border-color: var(--celeste); background: var(--celeste-claro); }
+  .opcion-label input[type="radio"] { display: none; }
+  .opcion-label.seleccionada {
+    border-color: var(--celeste);
+    background: var(--celeste-claro);
+    color: var(--azul);
+    font-weight: 500;
+  }
+  .opcion-indicador {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid #CBD5E0;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .opcion-label.seleccionada .opcion-indicador {
+    background: var(--celeste);
+    border-color: var(--celeste);
+  }
+  .opcion-indicador::after {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: white;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .opcion-label.seleccionada .opcion-indicador::after { opacity: 1; }
+  .opcion-letra {
+    font-weight: 700;
+    color: var(--celeste);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    width: 14px;
+  }
+
+  .nav-bloques {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #E2E8F0;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--azul);
+    border: 1.5px solid var(--azul);
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-secondary:hover { background: var(--celeste-claro); }
+  .btn-secondary:disabled { opacity: 0.3; cursor: default; }
+
+  .alerta-incompleto {
+    background: #FFF3CD;
+    border: 1px solid #F5A623;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.82rem;
+    color: #7D5A0A;
+    margin-top: 1rem;
+    display: none;
+  }
+
+  /* PANTALLA RESULTADOS */
+  .resultados-header {
+    background: linear-gradient(135deg, var(--azul) 0%, var(--celeste) 100%);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    color: var(--blanco);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .resultados-header::before {
+    content: '';
+    position: absolute;
+    right: -30px; top: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .resultados-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 0.5rem;
+  }
+  .resultados-titulo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    position: relative; z-index: 1;
+  }
+  .resultados-subtitulo {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.75);
+    position: relative; z-index: 1;
+  }
+
+  .perfil-resumen {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px rgba(0,61,124,0.07);
+  }
+  .perfil-resumen-titulo {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gris-medio);
+    margin-bottom: 1rem;
+  }
+  .perfil-chips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .perfil-chip {
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .perfil-chip-dim {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+  }
+  .perfil-chip-nombre {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  .perfil-chip-intensidad {
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  /* DIMENSIÓN RESULTADO */
+  .dim-resultado {
+    background: var(--blanco);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 12px rgba(0,61,124,0.07);
+  }
+  .dim-resultado-header {
+    padding: 1.25rem 1.5rem 1rem;
+    border-bottom: 1px solid #F0F4F8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .dim-resultado-nombre {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--azul);
+  }
+  .dim-resultado-perfil-badge {
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  /* ESCALA VISUAL */
+  .escala-wrap {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #F0F4F8;
+  }
+  .escala-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gris-medio);
+    margin-bottom: 0.6rem;
+  }
+  .escala-track {
+    position: relative;
+    height: 12px;
+    background: #EDF2F7;
+    border-radius: 6px;
+    overflow: visible;
+    margin-bottom: 0.5rem;
+  }
+  .escala-zona {
+    position: absolute;
+    top: 0; height: 100%;
+    border-radius: 6px;
+    opacity: 0.18;
+  }
+  .escala-marcador {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: left 0.6s cubic-bezier(.34,1.56,.64,1);
+  }
+  .escala-rangos {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    color: var(--gris-medio);
+  }
+
+  /* TABS FEEDBACK */
+  .feedback-tabs {
+    display: flex;
+    border-bottom: 1px solid #F0F4F8;
+    overflow-x: auto;
+  }
+  .feedback-tab {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--gris-medio);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'Inter', sans-serif;
+  }
+  .feedback-tab:hover { color: var(--azul); }
+  .feedback-tab.activa { color: var(--azul); border-bottom-color: var(--celeste); font-weight: 600; }
+
+  .feedback-panel { display: none; padding: 1.5rem; }
+  .feedback-panel.activo { display: block; }
+
+  .feedback-seccion-titulo {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gris-medio);
+    margin-bottom: 0.6rem;
+    margin-top: 1.2rem;
+  }
+  .feedback-seccion-titulo:first-child { margin-top: 0; }
+  .feedback-texto {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--gris-texto);
+  }
+  .feedback-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+  }
+  .feedback-lista li {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--gris-texto);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .feedback-lista li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--celeste);
+    font-size: 0.8rem;
+  }
+
+  /* CIERRE */
+  .cierre-card {
+    background: var(--blanco);
+    border-radius: 14px;
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 2px 12px rgba(0,61,124,0.07);
+    border-top: 4px solid var(--celeste);
+  }
+  .cierre-titulo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--azul);
+    margin-bottom: 0.75rem;
+  }
+  .cierre-texto {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--gris-texto);
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .header { padding: 1rem; }
+    .bienvenida-hero { padding: 1.75rem 1.5rem 1.5rem; }
+    .bienvenida-body { padding: 1.5rem; }
+    .dimensiones-grid { grid-template-columns: 1fr; }
+    .perfil-chips { grid-template-columns: 1fr; }
+    .container { padding: 1rem 1rem 3rem; }
+    .bienvenida-titulo { font-size: 1.6rem; }
+    .progress-bar-wrap { width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo"><img src="data:image/png;base64,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" alt="UTN FRSF" style="height:32px;width:auto;display:block"></div>
+    <span class="header-badge">PFC · Ing. Civil</span>
+  </div>
+  <div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">0 / 44 preguntas</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- PANTALLA 0: BIENVENIDA -->
+  <div class="screen active" id="screen-bienvenida">
+    <div class="bienvenida-card">
+      <div class="bienvenida-hero">
+        <div class="bienvenida-eyebrow">Proyecto Final de Carrera · Diagnóstico inicial</div>
+        <img src="data:image/png;base64,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" alt="UTN FRSF" style="height:28px;width:auto;display:block;margin-bottom:1rem;opacity:0.9"><h1 class="bienvenida-titulo">Índice de Estilos<br>de Aprendizaje</h1>
+        <p class="bienvenida-subtitulo">Felder–Silverman · Versión en español</p>
+      </div>
+      <div class="bienvenida-body">
+        <p class="bienvenida-intro">
+          El <strong>Índice de Estilos de Aprendizaje (ILS)</strong> fue desarrollado por Richard Felder y Barbara Soloman específicamente para estudiantes de ingeniería. Mide cómo preferís recibir y procesar la información cuando aprendés algo nuevo.<br><br>
+          No hay respuestas correctas ni incorrectas. No evalúa capacidades ni inteligencia: describe preferencias naturales que todos tenemos. Conocerlas te ayuda a entender por qué algunas estrategias de estudio te funcionan mejor que otras, y por qué ciertos tipos de trabajo te resultan más cómodos o desafiantes.
+        </p>
+
+        <div class="dimensiones-grid">
+          <div class="dim-chip">
+            <div class="dim-chip-label">Dimensión 1</div>
+            <div>Procesamiento</div>
+            <div class="dim-chip-desc">Activo ↔ Reflexivo</div>
+          </div>
+          <div class="dim-chip">
+            <div class="dim-chip-label">Dimensión 2</div>
+            <div>Percepción</div>
+            <div class="dim-chip-desc">Sensorial ↔ Intuitivo</div>
+          </div>
+          <div class="dim-chip">
+            <div class="dim-chip-label">Dimensión 3</div>
+            <div>Entrada</div>
+            <div class="dim-chip-desc">Visual ↔ Verbal</div>
+          </div>
+          <div class="dim-chip">
+            <div class="dim-chip-label">Dimensión 4</div>
+            <div>Comprensión</div>
+            <div class="dim-chip-desc">Secuencial ↔ Global</div>
+          </div>
+        </div>
+
+        <div class="aviso-anonimato">
+          🔒 <strong>Este instrumento es anónimo.</strong> Tus respuestas individuales son privadas: solo vos ves tus resultados detallados. La cátedra accede únicamente a datos agregados del grupo (distribución de perfiles por dimensión), sin ningún identificador personal. La información se usa para adaptar la propuesta pedagógica a las características del grupo.
+        </div>
+
+        <div class="meta-chips">
+          <div class="meta-chip">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-width="2" d="M12 6v6l4 2"/></svg>
+            44 preguntas · ~10 minutos
+          </div>
+          <div class="meta-chip">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Feedback inmediato por dimensión
+          </div>
+          <div class="meta-chip">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M4 4h16v16H4z"/><path stroke-width="2" d="M4 9h16M9 4v16"/></svg>
+            Respondé lo primero que se te venga
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="iniciarTest()">
+          Comenzar el test
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2.5" d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANTALLA 1-4: PREGUNTAS POR BLOQUE -->
+  <div class="screen" id="screen-preguntas">
+    <div id="bloque-container"></div>
+    <div class="alerta-incompleto" id="alerta-incompleto">
+      ⚠️ Por favor respondé todas las preguntas de este bloque antes de continuar.
+    </div>
+    <div class="nav-bloques">
+      <button class="btn-secondary" id="btn-anterior" onclick="bloqueAnterior()">← Anterior</button>
+      <button class="btn-primary" id="btn-siguiente" onclick="bloqueSiguiente()">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA RESULTADOS -->
+  <div class="screen" id="screen-resultados">
+    <div class="resultados-header">
+      <div class="resultados-eyebrow">Tus resultados</div>
+      <h2 class="resultados-titulo">Tu perfil de aprendizaje</h2>
+      <p class="resultados-subtitulo" id="resultados-subtitulo"></p>
+      <button class="btn-primary" onclick="imprimirResultados()" style="margin-top:1rem;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.4);font-size:0.82rem;padding:0.6rem 1.25rem">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Guardar / Imprimir mis resultados
+      </button>
+    </div>
+
+    <div class="perfil-resumen">
+      <div class="perfil-resumen-titulo">Resumen de las cuatro dimensiones</div>
+      <div class="perfil-chips" id="perfil-chips"></div>
+    </div>
+
+    <div id="dimensiones-feedback"></div>
+
+    <div class="cierre-card">
+      <h3 class="cierre-titulo">¿Para qué usa la cátedra esta información?</h3>
+      <p class="cierre-texto">
+        La cátedra del PFC utiliza la distribución de perfiles del grupo para diseñar actividades que contemplen distintas formas de aprender. Por ejemplo: si la mayoría del grupo es visual y secuencial, las primeras clases incluirán más recursos gráficos y estructuras paso a paso; si hay una proporción alta de perfiles activos, se priorizarán dinámicas de trabajo en clase por sobre la lectura individual previa.<br><br>
+        Conocer tu propio perfil también te permite anticipar qué estrategias te van a resultar más naturales durante el año — y cuáles vas a necesitar desarrollar conscientemente. El PFC es un trabajo de larga duración que requiere moverse entre distintos modos: relevamiento activo, análisis reflexivo, documentación detallada, síntesis global. Ningún perfil tiene ventaja en todo: la clave es conocer tus fortalezas y saber cuándo activar cada modo.
+      </p>
+      <p class="cierre-texto" style="font-size:0.82rem; color: var(--gris-medio);">
+        Te recomendamos guardar o anotar tu perfil. En las primeras clases vamos a retomar estos resultados para conectarlos con la metodología de trabajo del PFC.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// =============================================
+// DATOS: 44 PREGUNTAS ILS EN ESPAÑOL
+// Estructura: { texto, opcionA, opcionB, dim (1-4), poloA }
+// dim: 1=Procesamiento, 2=Percepción, 3=Entrada, 4=Comprensión
+// poloA: el polo al que apunta la opción A (activo/sensorial/visual/secuencial = +1)
+// =============================================
+
+const preguntas = [
+  // DIMENSIÓN 1 — Procesamiento (A=activo, B=reflexivo)
+  { texto: "Entiendo mejor algo nuevo cuando lo...", opcionA: "pruebo, lo aplico o lo discuto con otros", opcionB: "pienso detenidamente antes de aplicarlo", dim: 1, poloA: "activo" },
+  { texto: "Me describiría principalmente como una persona...", opcionA: "conversadora y activa en grupos", opcionB: "reservada que prefiere procesar internamente", dim: 1, poloA: "activo" },
+  { texto: "Cuando estudio material nuevo, prefiero...", opcionA: "hablar sobre ello con compañeros o en grupo", opcionB: "reflexionar sobre ello de manera individual", dim: 1, poloA: "activo" },
+  { texto: "Preferiría que en esta materia el/la docente...", opcionA: "mostrara cómo se hace algo y luego nos pidiera practicarlo", opcionB: "explicara primero la teoría en profundidad antes de aplicarla", dim: 1, poloA: "activo" },
+  { texto: "Cuando formo parte de un equipo de trabajo, prefiero...", opcionA: "empezar a hacer y ajustar sobre la marcha", opcionB: "planificar cuidadosamente antes de empezar", dim: 1, poloA: "activo" },
+  { texto: "Me cuesta más...", opcionA: "mantener la concentración durante lecturas largas y solitarias", opcionB: "aplicar rápidamente algo que acabo de aprender", dim: 1, poloA: "activo" },
+  { texto: "En reuniones o clases, generalmente tiendo a...", opcionA: "participar activamente y hablar seguido", opcionB: "escuchar con atención y procesar en silencio", dim: 1, poloA: "activo" },
+  { texto: "Me resulta más fácil aprender cuando...", opcionA: "interactúo con otros y discutimos las ideas", opcionB: "trabajo solo/a sin interrupciones", dim: 1, poloA: "activo" },
+  { texto: "Cuando termino un examen, suelo...", opcionA: "revisarlo rápidamente y entregarlo", opcionB: "releerlo varias veces antes de entregar", dim: 1, poloA: "activo" },
+  { texto: "Cuando tengo un problema a resolver, prefiero...", opcionA: "intentar distintas soluciones de inmediato", opcionB: "analizar el problema con calma antes de actuar", dim: 1, poloA: "activo" },
+  { texto: "Aprendo mejor los conceptos nuevos cuando puedo...", opcionA: "experimentarlos o aplicarlos directamente", opcionB: "estudiarlos con detenimiento y profundidad", dim: 1, poloA: "activo" },
+
+  // DIMENSIÓN 2 — Percepción (A=sensorial, B=intuitivo)
+  { texto: "Prefiero trabajar con...", opcionA: "datos y hechos concretos y verificables", opcionB: "conceptos e ideas abstractas", dim: 2, poloA: "sensorial" },
+  { texto: "En un problema de ingeniería, me atrae más...", opcionA: "encontrar una solución práctica y aplicable", opcionB: "entender el principio teórico detrás del problema", dim: 2, poloA: "sensorial" },
+  { texto: "Me siento más cómodo/a cuando...", opcionA: "los procedimientos están bien definidos y hay pasos claros", opcionB: "tengo libertad para explorar distintos enfoques", dim: 2, poloA: "sensorial" },
+  { texto: "Cuando aprendo algo nuevo, prefiero...", opcionA: "partir de ejemplos concretos y luego generalizar", opcionB: "partir de principios generales y luego ver ejemplos", dim: 2, poloA: "sensorial" },
+  { texto: "Me incomoda más...", opcionA: "trabajar con teorías muy abstractas sin aplicación visible", opcionB: "trabajar con muchos datos repetitivos sin ver el concepto detrás", dim: 2, poloA: "sensorial" },
+  { texto: "Prefiero profesores/as que...", opcionA: "presenten situaciones reales y datos concretos", opcionB: "planteen teorías y modelos de interpretación", dim: 2, poloA: "sensorial" },
+  { texto: "Para mí es más importante que lo que aprendo...", opcionA: "sea directamente aplicable en la práctica", opcionB: "me haga entender las cosas de manera diferente", dim: 2, poloA: "sensorial" },
+  { texto: "Aprendo mejor con...", opcionA: "procedimientos paso a paso bien definidos", opcionB: "principios generales que puedo adaptar creativamente", dim: 2, poloA: "sensorial" },
+  { texto: "Me siento más cómodo/a con materias que tienen...", opcionA: "respuestas claras y resultados verificables", opcionB: "interpretaciones abiertas y múltiples soluciones válidas", dim: 2, poloA: "sensorial" },
+  { texto: "Cuando leo un texto técnico, me quedo principalmente con...", opcionA: "los datos, resultados y procedimientos concretos", opcionB: "las ideas centrales y sus implicancias conceptuales", dim: 2, poloA: "sensorial" },
+  { texto: "Describiría mi forma de trabajar como más...", opcionA: "cuidadosa y metódica, con atención al detalle", opcionB: "creativa e intuitiva, buscando conexiones nuevas", dim: 2, poloA: "sensorial" },
+
+  // DIMENSIÓN 3 — Entrada (A=visual, B=verbal)
+  { texto: "Recuerdo mejor lo que...", opcionA: "veo: diagramas, figuras, esquemas, mapas", opcionB: "escucho o leo en forma de texto", dim: 3, poloA: "visual" },
+  { texto: "Cuando alguien me explica cómo llegar a un lugar, prefiero...", opcionA: "un mapa o croquis dibujado", opcionB: "indicaciones verbales detalladas", dim: 3, poloA: "visual" },
+  { texto: "Aprendo más con...", opcionA: "imágenes, gráficos, videos y esquemas visuales", opcionB: "textos escritos o explicaciones orales detalladas", dim: 3, poloA: "visual" },
+  { texto: "Cuando analizo un proyecto, prefiero empezar por...", opcionA: "los planos, esquemas y representaciones gráficas", opcionB: "la memoria descriptiva y el texto explicativo", dim: 3, poloA: "visual" },
+  { texto: "Para recordar algo importante, me ayuda más...", opcionA: "visualizarlo o hacer un esquema", opcionB: "escribirlo con mis palabras o repetirlo en voz alta", dim: 3, poloA: "visual" },
+  { texto: "En una presentación, presto más atención a...", opcionA: "las figuras, gráficos y diagramas mostrados", opcionB: "lo que dice el/la expositor/a", dim: 3, poloA: "visual" },
+  { texto: "Cuando resuelvo un problema, tiendo a...", opcionA: "hacer un esquema o diagrama para visualizarlo", opcionB: "escribir los pasos y el razonamiento textualmente", dim: 3, poloA: "visual" },
+  { texto: "Me resulta más fácil aprender con...", opcionA: "animaciones, simulaciones o representaciones visuales", opcionB: "resúmenes escritos bien estructurados", dim: 3, poloA: "visual" },
+  { texto: "Para entender una relación compleja entre variables, prefiero...", opcionA: "un gráfico o tabla que la muestre visualmente", opcionB: "una explicación detallada en texto", dim: 3, poloA: "visual" },
+  { texto: "Cuando tomo apuntes, predominan...", opcionA: "diagramas, flechas, figuras y esquemas propios", opcionB: "frases, texto corrido y razonamientos escritos", dim: 3, poloA: "visual" },
+  { texto: "En mis trabajos prácticos, incluyo generalmente más...", opcionA: "esquemas, representaciones gráficas y figuras", opcionB: "desarrollo escrito, argumentación y explicaciones", dim: 3, poloA: "visual" },
+
+  // DIMENSIÓN 4 — Comprensión (A=secuencial, B=global)
+  { texto: "Tiendo a aprender...", opcionA: "en pasos ordenados, avanzando linealmente de a poco", opcionB: "en saltos, conectando ideas de golpe cuando algo hace clic", dim: 4, poloA: "secuencial" },
+  { texto: "Cuando resuelvo un problema, prefiero...", opcionA: "seguir un procedimiento paso a paso bien definido", opcionB: "ver primero el panorama general y luego los detalles", dim: 4, poloA: "secuencial" },
+  { texto: "Cuando estudio, suelo...", opcionA: "seguir el orden del programa o del libro de principio a fin", opcionB: "saltar entre temas según lo que me interesa o conecta", dim: 4, poloA: "secuencial" },
+  { texto: "Para entender algo nuevo, necesito...", opcionA: "que me lo expliquen en una secuencia lógica ordenada", opcionB: "saber primero el panorama general y para qué sirve", dim: 4, poloA: "secuencial" },
+  { texto: "Cuando trabajo en un proyecto, prefiero...", opcionA: "avanzar etapa por etapa de manera ordenada", opcionB: "tener primero una visión completa del resultado final", dim: 4, poloA: "secuencial" },
+  { texto: "En un examen, me va mejor con...", opcionA: "preguntas ordenadas, bien delimitadas y con pasos claros", opcionB: "preguntas abiertas que me permiten conectar ideas y ser creativo/a", dim: 4, poloA: "secuencial" },
+  { texto: "Cuando leo un texto técnico, suelo...", opcionA: "leerlo de principio a fin siguiendo el orden del autor", opcionB: "hojear primero para tener una idea general antes de leer", dim: 4, poloA: "secuencial" },
+  { texto: "Para explicarle algo a alguien, tiendo a...", opcionA: "ir paso a paso desde el principio de manera ordenada", opcionB: "dar primero la idea central y luego los detalles", dim: 4, poloA: "secuencial" },
+  { texto: "Me siento más cómodo/a cuando...", opcionA: "sé exactamente qué se espera de mí en cada etapa", opcionB: "tengo libertad para definir mi propio camino hacia el objetivo", dim: 4, poloA: "secuencial" },
+  { texto: "Me resulta más fácil...", opcionA: "seguir instrucciones detalladas paso a paso", opcionB: "trabajar con pocas pautas generales y completar los detalles yo", dim: 4, poloA: "secuencial" },
+  { texto: "Cuando aprendo algo complejo, suelo...", opcionA: "entenderlo gradualmente a medida que voy avanzando", opcionB: "no entender del todo hasta que de repente todo hace clic", dim: 4, poloA: "secuencial" },
+];
+
+// Organizar por bloques (dimensiones)
+const bloques = [
+  { nombre: "Dimensión 1: Procesamiento", descripcion: "¿Cómo preferís trabajar con la información nueva?", indices: preguntas.map((p,i) => p.dim===1 ? i : -1).filter(i=>i>=0) },
+  { nombre: "Dimensión 2: Percepción", descripcion: "¿Qué tipo de información captás más fácilmente?", indices: preguntas.map((p,i) => p.dim===2 ? i : -1).filter(i=>i>=0) },
+  { nombre: "Dimensión 3: Entrada", descripcion: "¿Por qué canal recibís mejor la información?", indices: preguntas.map((p,i) => p.dim===3 ? i : -1).filter(i=>i>=0) },
+  { nombre: "Dimensión 4: Comprensión", descripcion: "¿Cómo construís la comprensión de algo nuevo?", indices: preguntas.map((p,i) => p.dim===4 ? i : -1).filter(i=>i>=0) },
+];
+
+let respuestas = {};
+let bloqueActual = 0;
+
+// =============================================
+// FEEDBACK DATA
+// =============================================
+const feedbackData = {
+  1: {
+    dimNombre: "Procesamiento",
+    poloA: "Activo", poloB: "Reflexivo",
+    colorA: "#0070C0", colorB: "#6B46C1",
+    activo: {
+      descripcion: "Aprendés haciendo. Necesitás probar, experimentar y discutir con otros para consolidar lo que aprendés. Te sentís más cómodo/a cuando podés poner en práctica una idea rápidamente, y el trabajo en grupo te resulta estimulante y productivo.",
+      fortalezas: ["Facilidad para arrancar, tomar decisiones y avanzar en etapas concretas.", "En dinámicas grupales y talleres vas a destacarte naturalmente.", "Las fases de relevamiento de campo, entrevistas con actores y diagnósticos participativos te van a resultar naturales."],
+      desafios: ["El PFC requiere trabajo individual sostenido: revisar bibliografía, fundamentar decisiones, redactar la memoria.", "Podés tender a avanzar sin consolidar suficientemente cada paso, generando la necesidad de volver atrás."],
+      pfc: ["Reservá momentos específicos de revisión y escritura, aunque no te salgan naturalmente.", "Usá el diario de proyecto como herramienta: registrar por escrito lo que vas decidiendo te ayuda a no perder el hilo.", "Aprovechá las presentaciones parciales como oportunidades de consolidación, no solo de exposición."],
+      estudio: ["Estudiá en grupos de discusión siempre que puedas.", "Cuando leas un texto técnico, intentá explicárselo a alguien o hacer un esquema de lo entendido antes de continuar.", "Aprendés mejor si asociás cada concepto nuevo a un ejemplo concreto del proyecto."]
+    },
+    reflexivo: {
+      descripcion: "Aprendés pensando. Necesitás tiempo para procesar la información antes de actuar. Preferís trabajar en silencio, analizar en profundidad antes de sacar conclusiones, y tendés a ser cuidadoso/a y metódico/a en lo que producís.",
+      fortalezas: ["Tu tendencia a analizar antes de actuar es muy valiosa en ingeniería, donde las decisiones tienen consecuencias técnicas concretas.", "Vas a producir documentación sólida y bien fundamentada.", "El análisis bibliográfico, la justificación metodológica y la redacción de la memoria serán tu zona de confort."],
+      desafios: ["El PFC tiene plazos fijos y requiere avanzar aunque no todo esté perfectamente resuelto.", "Podés tender a sobre-analizar antes de decidir, generando bloqueos o retrasos.", "Las presentaciones orales y dinámicas grupales pueden resultarte más exigentes."],
+      pfc: ["Establecé fechas límite propias anteriores a las entregas formales.", "Preguntate: ¿el nivel de análisis que tengo ya es suficiente para avanzar?", "Practicá las presentaciones orales con anticipación: tu solidez conceptual es un gran activo que necesita entrenamiento para comunicarse con fluidez."],
+      estudio: ["Antes de clase, leé el material con anticipación y tomá notas propias.", "No te preocupes si no participás en el momento: procesás mejor la información en diferido.", "Usá mapas conceptuales y esquemas para organizar lo que aprendés."]
+    },
+    equilibrado: "Tenés flexibilidad en tu forma de procesar: podés tanto actuar como reflexionar según lo que la situación requiera. En el PFC aprovechá esta flexibilidad conscientemente: en las etapas de diagnóstico y relevamiento activá el modo activo; en las etapas de diseño y redacción, activá el modo reflexivo."
+  },
+  2: {
+    dimNombre: "Percepción",
+    poloA: "Sensorial", poloB: "Intuitivo",
+    colorA: "#27AE60", colorB: "#E67E22",
+    activo: {
+      descripcion: "Preferís trabajar con hechos concretos, datos reales y procedimientos verificables. Te sentís más cómodo/a cuando el aprendizaje está anclado en situaciones reales y podés ver la aplicación práctica de lo que estudiás.",
+      fortalezas: ["Solidez en el relevamiento, diagnóstico técnico y elaboración de presupuesto.", "Trabajás con precisión en la recopilación de datos de campo y análisis de antecedentes.", "La elaboración de planos, cómputos y memorias descriptivas te va a resultar natural."],
+      desafios: ["El PFC requiere tomar decisiones en contextos de incertidumbre, con supuestos razonados.", "Implica justificar metodológicamente las decisiones tomadas, moviéndose en el plano conceptual.", "Podés tender a quedarte en los detalles y perder de vista el argumento central del proyecto."],
+      pfc: ["Cuando enfrentes decisiones metodológicas, ejercitá el 'por qué elegí esta alternativa y no otra'.", "Usá la bibliografía no solo como fuente de datos sino como marco para interpretar lo que encontrás.", "Revisá periódicamente que los detalles que desarrollás están al servicio del objetivo central."],
+      estudio: ["Buscá siempre ejemplos concretos y casos reales para anclar los conceptos nuevos.", "Cuando leas bibliografía técnica, subrayá datos y procedimientos, pero también anotá la idea central.", "Aprendés mejor relacionando la teoría con experiencias previas de la práctica profesional."]
+    },
+    reflexivo: {
+      descripcion: "Preferís trabajar con conceptos, teorías y posibilidades. Te atraen los problemas abiertos, las conexiones entre ideas y la innovación. Aprendés rápido cuando entendés el principio detrás de algo.",
+      fortalezas: ["Facilidad para identificar el problema de fondo detrás de los síntomas.", "Capacidad para pensar en alternativas creativas y conectar el proyecto con marcos conceptuales más amplios.", "La formulación de objetivos, análisis de alternativas y argumentación técnica serán tu zona fuerte."],
+      desafios: ["El PFC requiere mucho trabajo de detalle: cómputos, verificaciones normativas, documentación gráfica.", "Podés tender a subestimar las etapas de detalle o a apresurarte en ellas.", "Riesgo de generar ideas conceptualmente ricas pero difíciles de concretar en los plazos disponibles."],
+      pfc: ["Reservá tiempo explícito para etapas de detalle y verificación.", "Ante cada idea o alternativa, preguntate: ¿es viable técnicamente? ¿puedo documentarla? ¿tengo los datos?", "Usá el cronograma como ancla para no perderte en exploraciones que consumen tiempo sin avanzar la entrega."],
+      estudio: ["Empezá siempre por entender el principio general antes de ver los procedimientos.", "Buscá conexiones entre los contenidos del PFC y lo aprendido en otras materias.", "Para memorizar procedimientos o normativas, buscá la lógica detrás: te resultará mucho más fácil."]
+    },
+    equilibrado: "Podés moverte cómodamente entre lo concreto y lo abstracto según lo que el momento requiera. En el PFC esto es especialmente valioso: las etapas de diagnóstico y diseño requieren pensamiento conceptual, mientras que la documentación y verificación requieren precisión en los detalles."
+  },
+  3: {
+    dimNombre: "Entrada",
+    poloA: "Visual", poloB: "Verbal",
+    colorA: "#2980B9", colorB: "#8E44AD",
+    activo: {
+      descripcion: "Procesás y recordás mejor la información cuando la recibís en formato visual: diagramas, esquemas, gráficos, mapas, videos. Una imagen o un esquema bien diseñado te dice más que varios párrafos de texto.",
+      fortalezas: ["La ingeniería civil es profundamente visual: planos, perfiles, mapas, esquemas estructurales.", "Tu perfil se alinea naturalmente con la documentación gráfica del proyecto.", "Vas a producir presentaciones con buena calidad gráfica y aprovechar muy bien los recursos visuales de la cátedra."],
+      desafios: ["El PFC requiere documentación escrita extensa y bien argumentada: memoria descriptiva, justificaciones metodológicas.", "Podés tender a desarrollar mejor la parte gráfica que la escrita, generando desequilibrio en el informe final."],
+      pfc: ["Usá esquemas y diagramas como herramienta de pensamiento, no solo de presentación: antes de escribir una sección, esquematizá lo que querés decir.", "Prestá atención especial a la redacción técnica durante el cursado: es una habilidad que se entrena."],
+      estudio: ["Convertí los textos que leés en esquemas, mapas conceptuales o líneas de tiempo.", "Cuando estudies normativas, dibujá el flujo del proceso.", "Los videos y tutoriales te van a resultar especialmente útiles para aprender procedimientos nuevos."]
+    },
+    reflexivo: {
+      descripcion: "Procesás y recordás mejor la información cuando la recibís en formato verbal: textos escritos, explicaciones orales, discusiones. Aprendés bien leyendo y escuchando, y te expresás con facilidad a través de la escritura y el habla.",
+      fortalezas: ["La redacción de la memoria, la justificación de decisiones y la argumentación en la defensa oral serán tus puntos fuertes.", "Vas a producir documentación escrita clara y bien estructurada.", "Te vas a desenvolver con comodidad en las presentaciones orales."],
+      desafios: ["La documentación gráfica es una parte sustancial del PFC: planos, esquemas, infografías, presentaciones visuales.", "Podés tender a subestimar esa dimensión o a sobre-explicar por escrito lo que un gráfico diría mejor."],
+      pfc: ["Ejercitá deliberadamente la comunicación visual: antes de escribir una descripción larga, preguntate si un esquema lo diría mejor.", "Trabajá en complementariedad con compañeros de perfil visual cuando sea posible."],
+      estudio: ["Resumí lo que aprendés escribiendo con tus propias palabras.", "Las discusiones y explicaciones en voz alta te ayudan a consolidar.", "Cuando enfrentes material muy visual, complementalo con una descripción escrita propia para apropiarte del contenido."]
+    },
+    equilibrado: "Podés procesar información tanto visual como verbalmente. En el PFC esto es una ventaja concreta: vas a moverte con comodidad tanto en la documentación gráfica como en la escrita, que son las dos grandes dimensiones comunicativas del informe final."
+  },
+  4: {
+    dimNombre: "Comprensión",
+    poloA: "Secuencial", poloB: "Global",
+    colorA: "#16A085", colorB: "#C0392B",
+    activo: {
+      descripcion: "Aprendés mejor cuando la información se presenta en pasos ordenados y con lógica lineal. Avanzás con seguridad cuando cada paso está bien consolidado antes de pasar al siguiente. Te sentís más cómodo/a con estructuras claras y procedimientos bien definidos.",
+      fortalezas: ["Tu forma de trabajar es muy compatible con la estructura metodológica del PFC: diagnóstico → formulación → evaluación → comunicación.", "Vas a gestionar bien el cronograma, cumplir las entregas parciales y producir documentación ordenada y coherente."],
+      desafios: ["El PFC no siempre avanza linealmente: a veces hay que volver atrás cuando la formulación revela nuevos problemas.", "Podés tender a incomodarte con esas iteraciones y a querer cerrar cada etapa definitivamente antes de avanzar."],
+      pfc: ["Incorporá la revisión y la iteración como parte esperada del proceso, no como un error.", "Cuando tengas que volver atrás, usalos como señal de que el proyecto está madurando.", "Reservá en tu cronograma tiempo para revisiones, además del tiempo de producción."],
+      estudio: ["Seguí el orden de los materiales de la cátedra: están diseñados para construir comprensión paso a paso.", "Antes de avanzar a un tema nuevo, verificá que entendiste bien el anterior.", "Los resúmenes por etapas e índices de contenido te van a ayudar a mantener el hilo."]
+    },
+    reflexivo: {
+      descripcion: "Aprendés en saltos: podés estar confundido/a durante un tiempo y de repente todo hace clic. Necesitás ver el panorama completo antes de que los detalles tengan sentido. Te sentís más motivado/a cuando conocés el para qué de lo que estás aprendiendo.",
+      fortalezas: ["Facilidad para ver conexiones entre distintas partes del proyecto y para entender cómo cada decisión impacta en el conjunto.", "Eso es muy valioso en la formulación y en la defensa, donde hay que mostrar coherencia interna.", "Buena capacidad para identificar cuando algo no encaja en el conjunto."],
+      desafios: ["Podés tener dificultades para avanzar en etapas intermedias sin ver aún el resultado final.", "Las entregas parciales pueden generarte insatisfacción o bloqueo.", "Podés tener dificultad para explicar tu razonamiento paso a paso, aunque el resultado final sea sólido."],
+      pfc: ["Empezá cada etapa con una visión de conjunto: antes de desarrollar el diagnóstico, leé la estructura completa del informe final.", "Usá el mapa del proyecto como referencia permanente.", "Ejercitá la reconstrucción del razonamiento en pasos: es clave para la defensa oral."],
+      estudio: ["Antes de entrar en detalles de un tema, buscá primero una visión general: leé el índice, resumen o introducción.", "Los materiales de la cátedra incluyen al inicio de cada unidad una síntesis del recorrido completo: usalos como mapa.", "Conectá lo que aprendés con el proyecto propio: esa conexión acelera tu comprensión."]
+    },
+    equilibrado: "Podés tanto seguir una secuencia ordenada como captar el conjunto de forma intuitiva, según lo que el momento requiera. En el PFC esto te permite gestionar el cronograma con disciplina (dimensión secuencial) y mantener la visión global del proyecto (dimensión global), que son las dos capacidades que más necesita quien dirige un proyecto."
+  }
+};
+
+// =============================================
+// LÓGICA DEL TEST
+// =============================================
+
+function iniciarTest() {
+  document.getElementById('screen-bienvenida').classList.remove('active');
+  document.getElementById('screen-preguntas').classList.add('active');
+  renderBloque(0);
+}
+
+function renderBloque(idx) {
+  bloqueActual = idx;
+  const bloque = bloques[idx];
+  const container = document.getElementById('bloque-container');
+
+  let html = `
+    <div class="bloque-titulo">
+      <div class="bloque-numero">${idx+1}</div>
+      <div>
+        <div class="bloque-nombre">${bloque.nombre}</div>
+        <div class="bloque-descripcion">${bloque.descripcion}</div>
+      </div>
+    </div>
+  `;
+
+  bloque.indices.forEach((pregIdx, i) => {
+    const p = preguntas[pregIdx];
+    const respActual = respuestas[pregIdx];
+    html += `
+      <div class="pregunta-card ${respActual ? 'respondida' : ''}" id="card-${pregIdx}">
+        <div class="pregunta-numero">Pregunta ${i+1} de ${bloque.indices.length}</div>
+        <div class="pregunta-texto">${p.texto}</div>
+        <div class="opciones">
+          <label class="opcion-label ${respActual==='a' ? 'seleccionada' : ''}" onclick="seleccionar(${pregIdx}, 'a', this)">
+            <input type="radio" name="p${pregIdx}" value="a" ${respActual==='a'?'checked':''}>
+            <div class="opcion-indicador"></div>
+            <span class="opcion-letra">a)</span>
+            <span>${p.opcionA}</span>
+          </label>
+          <label class="opcion-label ${respActual==='b' ? 'seleccionada' : ''}" onclick="seleccionar(${pregIdx}, 'b', this)">
+            <input type="radio" name="p${pregIdx}" value="b" ${respActual==='b'?'checked':''}>
+            <div class="opcion-indicador"></div>
+            <span class="opcion-letra">b)</span>
+            <span>${p.opcionB}</span>
+          </label>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+
+  document.getElementById('btn-anterior').disabled = (idx === 0);
+  document.getElementById('btn-siguiente').textContent = idx === bloques.length - 1 ? 'Ver mis resultados →' : 'Siguiente →';
+  document.getElementById('alerta-incompleto').style.display = 'none';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  actualizarProgress();
+}
+
+function seleccionar(pregIdx, valor, labelEl) {
+  respuestas[pregIdx] = valor;
+  // Actualizar estilos
+  const card = document.getElementById('card-' + pregIdx);
+  card.classList.add('respondida');
+  card.querySelectorAll('.opcion-label').forEach(l => l.classList.remove('seleccionada'));
+  labelEl.classList.add('seleccionada');
+  actualizarProgress();
+}
+
+function actualizarProgress() {
+  const total = preguntas.length;
+  const respondidas = Object.keys(respuestas).length;
+  const pct = (respondidas / total) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${respondidas} / ${total} preguntas`;
+}
+
+function bloqueAnterior() {
+  if (bloqueActual > 0) renderBloque(bloqueActual - 1);
+}
+
+function bloqueSiguiente() {
+  const bloque = bloques[bloqueActual];
+  const sinResponder = bloque.indices.filter(i => !respuestas[i]);
+  if (sinResponder.length > 0) {
+    document.getElementById('alerta-incompleto').style.display = 'block';
+    // Scroll a la primera sin responder
+    const firstCard = document.getElementById('card-' + sinResponder[0]);
+    if (firstCard) firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  if (bloqueActual < bloques.length - 1) {
+    renderBloque(bloqueActual + 1);
+  } else {
+    mostrarResultados();
+  }
+}
+
+// =============================================
+// CÁLCULO Y RESULTADOS
+// =============================================
+
+function calcularPuntajes() {
+  const scores = { 1: 0, 2: 0, 3: 0, 4: 0 };
+  preguntas.forEach((p, i) => {
+    if (respuestas[i] === 'a') scores[p.dim] += 1;
+    else if (respuestas[i] === 'b') scores[p.dim] -= 1;
+  });
+  // scores positivos = polo A (activo/sensorial/visual/secuencial)
+  // scores negativos = polo B (reflexivo/intuitivo/verbal/global)
+  return scores;
+}
+
+function interpretarPuntaje(score, dimData) {
+  const abs = Math.abs(score);
+  let polo, color;
+  // score positivo = más respuestas A = polo A (activo/sensorial/visual/secuencial)
+  // score negativo = más respuestas B = polo B (reflexivo/intuitivo/verbal/global)
+  // score 0 = equilibrado, mostramos polo A por convención pero badge dice Equilibrado
+  if (score > 0) { polo = dimData.poloA; color = dimData.colorA; }
+  else if (score < 0) { polo = dimData.poloB; color = dimData.colorB; }
+  else { polo = "Equilibrado/a"; color = "#888796"; }
+
+  let intensidad;
+  if (abs <= 3) intensidad = "Equilibrado/a";
+  else if (abs <= 7) intensidad = "Preferencia moderada";
+  else intensidad = "Preferencia fuerte";
+
+  // Para display en chip resumen: si equilibrado, mostrar ambos polos
+  const poloDisplay = (abs <= 3) ? "Equilibrado/a" : polo;
+
+  return { polo, poloDisplay, color, intensidad, abs, score };
+}
+
+function mostrarResultados() {
+  document.getElementById('screen-preguntas').classList.remove('active');
+  document.getElementById('screen-resultados').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const scores = calcularPuntajes();
+
+  // Subtítulo
+  const interps = [1,2,3,4].map(d => interpretarPuntaje(scores[d], feedbackData[d]));
+  document.getElementById('resultados-subtitulo').textContent =
+    interps.map(i => i.polo).join(' · ');
+
+  // Chips resumen
+  const chipsContainer = document.getElementById('perfil-chips');
+  const dimNames = ['Procesamiento', 'Percepción', 'Entrada', 'Comprensión'];
+  chipsContainer.innerHTML = [1,2,3,4].map((d,i) => {
+    const interp = interps[i];
+    return `<div class="perfil-chip" style="background:${interp.color}18; border:1.5px solid ${interp.color}33">
+      <div class="perfil-chip-dim" style="color:${interp.color}">${dimNames[i]}</div>
+      <div class="perfil-chip-nombre" style="color:${interp.color}">${interp.poloDisplay}</div>
+      <div class="perfil-chip-intensidad" style="color:${interp.color}">${interp.intensidad}</div>
+    </div>`;
+  }).join('');
+
+  // Dimensiones con feedback
+  const feedbackContainer = document.getElementById('dimensiones-feedback');
+  feedbackContainer.innerHTML = [1,2,3,4].map(d => {
+    const data = feedbackData[d];
+    const interp = interpretarPuntaje(scores[d], data);
+    const isEq = interp.abs <= 3;
+    // clave del feedbackData: siempre 'activo' para polo A, 'reflexivo' para polo B
+    const poloKey = interp.score > 0 ? 'activo' : 'reflexivo';
+    const fb = isEq ? null : data[poloKey];
+
+    // Escala: mapeo de -11 a 11 → 0 a 100%
+    // Polo A (score positivo) = izquierda, Polo B (score negativo) = derecha
+    // score +11 → pos 0% (extremo izquierdo), score -11 → pos 100% (extremo derecho)
+    const pos = ((11 - scores[d]) / 22) * 100;
+
+    return `
+    <div class="dim-resultado">
+      <div class="dim-resultado-header">
+        <div>
+          <div class="dim-resultado-nombre">${data.dimNombre}</div>
+          <div style="font-size:0.78rem;color:var(--gris-medio);margin-top:0.2rem">${data.poloA} ↔ ${data.poloB}</div>
+        </div>
+        <div class="dim-resultado-perfil-badge" style="background:${interp.color}">
+          ${interp.polo} · ${interp.intensidad}
+        </div>
+      </div>
+
+      <div class="escala-wrap">
+        <div class="escala-track" style="margin-bottom:0.4rem">
+          <div class="escala-zona" style="left:0;width:27%;background:${data.colorA}"></div>
+          <div class="escala-zona" style="left:73%;width:27%;background:${data.colorB}"></div>
+          <div class="escala-marcador" style="left:${pos}%;background:${interp.color}"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);font-size:0.67rem;text-align:center;gap:0">
+          <span style="color:${data.colorA};font-weight:600;text-align:left">Fuerte</span>
+          <span style="color:${data.colorA};text-align:center">Moderado</span>
+          <span style="color:var(--gris-medio);text-align:center">Equilibrado</span>
+          <span style="color:${data.colorB};text-align:center">Moderado</span>
+          <span style="color:${data.colorB};font-weight:600;text-align:right">Fuerte</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.65rem;margin-top:0.3rem">
+          <span style="color:${data.colorA};font-weight:600">← ${data.poloA}</span>
+          <span style="color:${data.colorB};font-weight:600">${data.poloB} →</span>
+        </div>
+      </div>
+
+      ${isEq ? `
+      <div style="padding:1.5rem">
+        <div class="feedback-seccion-titulo">Tu perfil</div>
+        <p class="feedback-texto">${data.equilibrado}</p>
+      </div>
+      ` : `
+      <div class="feedback-tabs" id="tabs-d${d}">
+        <button class="feedback-tab activa" onclick="switchTab(${d}, 'desc', this)">¿Qué significa?</button>
+        <button class="feedback-tab" onclick="switchTab(${d}, 'fort', this)">Fortalezas</button>
+        <button class="feedback-tab" onclick="switchTab(${d}, 'des', this)">Desafíos</button>
+        <button class="feedback-tab" onclick="switchTab(${d}, 'pfc', this)">Para tu PFC</button>
+        <button class="feedback-tab" onclick="switchTab(${d}, 'est', this)">Estudio</button>
+      </div>
+      <div class="feedback-panel activo" id="panel-d${d}-desc">
+        <p class="feedback-texto">${fb.descripcion}</p>
+      </div>
+      <div class="feedback-panel" id="panel-d${d}-fort">
+        <ul class="feedback-lista">${fb.fortalezas.map(f=>`<li>${f}</li>`).join('')}</ul>
+      </div>
+      <div class="feedback-panel" id="panel-d${d}-des">
+        <ul class="feedback-lista">${fb.desafios.map(f=>`<li>${f}</li>`).join('')}</ul>
+      </div>
+      <div class="feedback-panel" id="panel-d${d}-pfc">
+        <ul class="feedback-lista">${fb.pfc.map(f=>`<li>${f}</li>`).join('')}</ul>
+      </div>
+      <div class="feedback-panel" id="panel-d${d}-est">
+        <ul class="feedback-lista">${fb.estudio.map(f=>`<li>${f}</li>`).join('')}</ul>
+      </div>
+      `}
+    </div>`;
+  }).join('');
+
+  // Guardar datos agregados (anónimos)
+  guardarDatosAgregados(scores);
+}
+
+function switchTab(dim, panel, btn) {
+  const tabs = document.getElementById('tabs-d' + dim);
+  tabs.querySelectorAll('.feedback-tab').forEach(t => t.classList.remove('activa'));
+  btn.classList.add('activa');
+
+  const panels = ['desc','fort','des','pfc','est'];
+  panels.forEach(p => {
+    const el = document.getElementById(`panel-d${dim}-${p}`);
+    if (el) el.classList.remove('activo');
+  });
+  const target = document.getElementById(`panel-d${dim}-${panel}`);
+  if (target) target.classList.add('activo');
+}
+
+// =============================================
+// DESCARGA / IMPRESIÓN
+// =============================================
+function imprimirResultados() {
+  const scores = calcularPuntajes();
+  const dimNames = ['Procesamiento', 'Percepción', 'Entrada', 'Comprensión'];
+  const interps = [1,2,3,4].map(d => interpretarPuntaje(scores[d], feedbackData[d]));
+
+  let html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+  <title>Mi perfil ILS — PFC UTN FRSF</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; color: #2D3748; }
+    h1 { color: #003D7C; font-size: 1.4rem; margin-bottom: 0.25rem; }
+    .subtitulo { color: #8896A8; font-size: 0.9rem; margin-bottom: 2rem; }
+    .fecha { font-size: 0.8rem; color: #8896A8; margin-bottom: 1.5rem; }
+    .dim { border: 1.5px solid #E2E8F0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+    .dim-nombre { font-weight: 700; color: #003D7C; font-size: 1rem; margin-bottom: 0.25rem; }
+    .dim-polo { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .dim-intensidad { font-size: 0.82rem; color: #8896A8; margin-bottom: 0.75rem; }
+    .dim-desc { font-size: 0.88rem; line-height: 1.65; }
+    .aviso { background: #E8F4FD; border-left: 3px solid #0070C0; padding: 0.75rem 1rem; font-size: 0.82rem; color: #003D7C; margin-top: 2rem; border-radius: 0 8px 8px 0; }
+    @media print { .no-print { display: none; } }
+  </style></head><body>
+  <h1>Mi perfil de estilos de aprendizaje</h1>
+  <div class="subtitulo">Índice de Estilos de Aprendizaje de Felder–Silverman · PFC Ingeniería Civil UTN FRSF</div>
+  <div class="fecha">Fecha: ${new Date().toLocaleDateString('es-AR', {year:'numeric',month:'long',day:'numeric'})}</div>`;
+
+  [1,2,3,4].map((d,i) => {
+    const interp = interps[i];
+    const data = feedbackData[d];
+    const isEq = interp.abs <= 3;
+    const poloKey = interp.score > 0 ? 'activo' : 'reflexivo';
+    const desc = isEq ? data.equilibrado : data[poloKey].descripcion;
+    html += `<div class="dim">
+      <div class="dim-nombre">${dimNames[i]}: ${data.poloA} ↔ ${data.poloB}</div>
+      <div class="dim-polo" style="color:${interp.color}">${interp.poloDisplay}</div>
+      <div class="dim-intensidad">${interp.intensidad} · Puntaje: ${interp.score > 0 ? '+' : ''}${interp.score} / 11</div>
+      <div class="dim-desc">${desc}</div>
+    </div>`;
+  });
+
+  html += `<div class="aviso">Este resultado es personal y privado. La cátedra solo accede a datos agregados del grupo, sin identificadores individuales.</div>
+  </body></html>`;
+
+  const ventana = window.open('', '_blank');
+  ventana.document.write(html);
+  ventana.document.close();
+  setTimeout(() => ventana.print(), 500);
+}
+
+// =============================================
+// ALMACENAMIENTO ANÓNIMO AGREGADO
+// =============================================
+async function guardarDatosAgregados(scores) {
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwpYUBo0iNqcxs4rathubY4iMxBIyIPcF8xdgVt7C_vJqv4eapzWcUW2Kxi4wGq_0z4/exec';
+  try {
+    const interps = [1,2,3,4].map(d => {
+      const data = feedbackData[d];
+      return interpretarPuntaje(scores[d], data);
+    });
+    const payload = {
+      tipo: 'ILS',
+      anio: '2026',
+      procesamiento: interps[0].poloDisplay,
+      score_proc: scores[1],
+      percepcion: interps[1].poloDisplay,
+      score_perc: scores[2],
+      entrada: interps[2].poloDisplay,
+      score_entr: scores[3],
+      comprension: interps[3].poloDisplay,
+      score_comp: scores[4],
+      intensidad_proc: interps[0].intensidad,
+      intensidad_perc: interps[1].intensidad,
+      intensidad_entr: interps[2].intensidad,
+      intensidad_comp: interps[3].intensidad
+    };
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) {
+    // Silencioso
+  }
+}
+</script>
+</body>
+</html>
