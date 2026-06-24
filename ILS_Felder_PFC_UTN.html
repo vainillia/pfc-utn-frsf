@@ -724,10 +724,6 @@
       <div class="resultados-eyebrow">Tus resultados</div>
       <h2 class="resultados-titulo">Tu perfil de aprendizaje</h2>
       <p class="resultados-subtitulo" id="resultados-subtitulo"></p>
-      <button class="btn-primary" onclick="imprimirResultados()" style="margin-top:1rem;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.4);font-size:0.82rem;padding:0.6rem 1.25rem">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-        Guardar / Imprimir mis resultados
-      </button>
     </div>
 
     <div class="perfil-resumen">
@@ -746,6 +742,14 @@
       <p class="cierre-texto" style="font-size:0.82rem; color: var(--gris-medio);">
         Te recomendamos guardar o anotar tu perfil. En las primeras clases vamos a retomar estos resultados para conectarlos con la metodología de trabajo del PFC.
       </p>
+    </div>
+
+    <div style="margin-top:1.5rem;text-align:center">
+      <button class="btn-primary" onclick="imprimirResultados()" style="font-size:0.9rem;padding:0.85rem 2rem">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Guardar / Imprimir mis resultados completos
+      </button>
+      <p style="font-size:0.78rem;color:var(--gris-medio);margin-top:0.6rem">El PDF incluye tu perfil completo con retroalimentación por dimensión</p>
     </div>
   </div>
 
@@ -1174,40 +1178,104 @@ function imprimirResultados() {
   const dimNames = ['Procesamiento', 'Percepción', 'Entrada', 'Comprensión'];
   const interps = [1,2,3,4].map(d => interpretarPuntaje(scores[d], feedbackData[d]));
 
+  const listaItems = (arr) => arr.map(i => `<li>${i}</li>`).join('');
+
   let html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   <title>Mi perfil ILS — PFC UTN FRSF</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; color: #2D3748; }
-    h1 { color: #003D7C; font-size: 1.4rem; margin-bottom: 0.25rem; }
-    .subtitulo { color: #8896A8; font-size: 0.9rem; margin-bottom: 2rem; }
-    .fecha { font-size: 0.8rem; color: #8896A8; margin-bottom: 1.5rem; }
-    .dim { border: 1.5px solid #E2E8F0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
-    .dim-nombre { font-weight: 700; color: #003D7C; font-size: 1rem; margin-bottom: 0.25rem; }
-    .dim-polo { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
-    .dim-intensidad { font-size: 0.82rem; color: #8896A8; margin-bottom: 0.75rem; }
-    .dim-desc { font-size: 0.88rem; line-height: 1.65; }
-    .aviso { background: #E8F4FD; border-left: 3px solid #0070C0; padding: 0.75rem 1rem; font-size: 0.82rem; color: #003D7C; margin-top: 2rem; border-radius: 0 8px 8px 0; }
-    @media print { .no-print { display: none; } }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem 3rem; color: #2D3748; font-size: 13px; line-height: 1.6; }
+    .encabezado { border-bottom: 3px solid #003D7C; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+    h1 { color: #003D7C; font-size: 1.3rem; margin-bottom: 0.2rem; }
+    .subtitulo { color: #8896A8; font-size: 0.82rem; }
+    .fecha { font-size: 0.75rem; color: #8896A8; margin-top: 0.25rem; }
+    .resumen-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .chip { border-radius: 20px; padding: 0.3rem 0.9rem; font-size: 0.78rem; font-weight: 700; color: white; }
+    .dim { border: 1.5px solid #E2E8F0; border-radius: 8px; margin-bottom: 1.25rem; overflow: hidden; page-break-inside: avoid; }
+    .dim-header { padding: 0.85rem 1.1rem 0.6rem; border-bottom: 1px solid #F0F4F8; }
+    .dim-nombre { font-weight: 700; color: #003D7C; font-size: 0.95rem; }
+    .dim-polo { font-size: 1rem; font-weight: 700; margin-top: 0.15rem; }
+    .dim-intensidad { font-size: 0.75rem; color: #8896A8; margin-top: 0.1rem; }
+    .dim-body { padding: 0.85rem 1.1rem; }
+    .seccion { margin-bottom: 0.85rem; }
+    .seccion:last-child { margin-bottom: 0; }
+    .seccion-titulo { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #8896A8; margin-bottom: 0.35rem; }
+    .seccion-texto { font-size: 0.83rem; line-height: 1.65; color: #2D3748; }
+    ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+    ul li { font-size: 0.83rem; padding-left: 1rem; position: relative; color: #2D3748; }
+    ul li::before { content: "→"; position: absolute; left: 0; color: #0070C0; font-size: 0.75rem; }
+    .aviso { background: #E8F4FD; border-left: 3px solid #0070C0; padding: 0.75rem 1rem; font-size: 0.78rem; color: #003D7C; margin-top: 1.5rem; border-radius: 0 6px 6px 0; }
+    .cierre { background: #F2F5F9; border-radius: 8px; padding: 1rem 1.1rem; margin-top: 1.25rem; font-size: 0.82rem; color: #2D3748; line-height: 1.65; }
+    .cierre strong { color: #003D7C; }
+    @media print { body { margin: 1rem; } .dim { page-break-inside: avoid; } }
   </style></head><body>
-  <h1>Mi perfil de estilos de aprendizaje</h1>
-  <div class="subtitulo">Índice de Estilos de Aprendizaje de Felder–Silverman · PFC Ingeniería Civil UTN FRSF</div>
-  <div class="fecha">Fecha: ${new Date().toLocaleDateString('es-AR', {year:'numeric',month:'long',day:'numeric'})}</div>`;
+  <div class="encabezado">
+    <h1>Mi perfil de estilos de aprendizaje</h1>
+    <div class="subtitulo">Índice de Estilos de Aprendizaje de Felder–Silverman · PFC Ingeniería Civil · UTN FRSF</div>
+    <div class="fecha">Fecha: ${new Date().toLocaleDateString('es-AR', {year:'numeric',month:'long',day:'numeric'})}</div>
+  </div>
+  <div class="resumen-chips">`;
+
+  [1,2,3,4].map((d,i) => {
+    const interp = interps[i];
+    html += `<span class="chip" style="background:${interp.color}">${dimNames[i]}: ${interp.poloDisplay}</span>`;
+  });
+
+  html += `</div>`;
 
   [1,2,3,4].map((d,i) => {
     const interp = interps[i];
     const data = feedbackData[d];
     const isEq = interp.abs <= 3;
     const poloKey = interp.score > 0 ? 'activo' : 'reflexivo';
-    const desc = isEq ? data.equilibrado : data[poloKey].descripcion;
+
     html += `<div class="dim">
-      <div class="dim-nombre">${dimNames[i]}: ${data.poloA} ↔ ${data.poloB}</div>
-      <div class="dim-polo" style="color:${interp.color}">${interp.poloDisplay}</div>
-      <div class="dim-intensidad">${interp.intensidad} · Puntaje: ${interp.score > 0 ? '+' : ''}${interp.score} / 11</div>
-      <div class="dim-desc">${desc}</div>
-    </div>`;
+      <div class="dim-header">
+        <div class="dim-nombre">${dimNames[i]}: ${data.poloA} ↔ ${data.poloB}</div>
+        <div class="dim-polo" style="color:${interp.color}">${interp.poloDisplay}</div>
+        <div class="dim-intensidad">${interp.intensidad} · Puntaje: ${interp.score > 0 ? '+' : ''}${interp.score} de 11</div>
+      </div>
+      <div class="dim-body">`;
+
+    if (isEq) {
+      html += `<div class="seccion">
+        <div class="seccion-titulo">Tu perfil</div>
+        <div class="seccion-texto">${data.equilibrado}</div>
+      </div>`;
+    } else {
+      const fb = data[poloKey];
+      html += `
+        <div class="seccion">
+          <div class="seccion-titulo">¿Qué significa?</div>
+          <div class="seccion-texto">${fb.descripcion}</div>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Fortalezas en el PFC</div>
+          <ul>${listaItems(fb.fortalezas)}</ul>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Desafíos en el PFC</div>
+          <ul>${listaItems(fb.desafios)}</ul>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Sugerencias para tu PFC</div>
+          <ul>${listaItems(fb.pfc)}</ul>
+        </div>
+        <div class="seccion">
+          <div class="seccion-titulo">Estrategias de estudio</div>
+          <ul>${listaItems(fb.estudio)}</ul>
+        </div>`;
+    }
+
+    html += `</div></div>`;
   });
 
-  html += `<div class="aviso">Este resultado es personal y privado. La cátedra solo accede a datos agregados del grupo, sin identificadores individuales.</div>
+  html += `
+  <div class="cierre">
+    <strong>¿Para qué usa la cátedra esta información?</strong><br>
+    La cátedra accede únicamente a datos agregados del grupo (distribución de perfiles) para adaptar la propuesta pedagógica. Este documento es tuyo y es privado. Te recomendamos guardarlo y revisarlo al comenzar cada etapa del PFC.
+  </div>
+  <div class="aviso">Resultado personal y privado. La cátedra no accede a resultados individuales ni a datos identificatorios.</div>
   </body></html>`;
 
   const ventana = window.open('', '_blank');
