@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bibliografía y Recursos de la Asignatura — PFC UTN FRSF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #003D7C;
+  --celeste: #0070C0;
+  --celeste-claro: #E8F4FD;
+  --gris-fondo: #F2F5F9;
+  --gris-borde: #E2E8F0;
+  --gris-texto: #2D3748;
+  --gris-medio: #8896A8;
+  --blanco: #ffffff;
+  --verde: #27AE60;
+  --ambar: #D97706;
+  --col-pdf: #C0392B;
+  --col-curso: #0070C0;
+  --col-video: #CC0000;
+  --col-podcast: #8E24AA;
+  --col-excel: #1E7E34;
+  --col-doc: #2F5496;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--gris-fondo); color: var(--gris-texto); min-height: 100vh; }
+
+/* HEADER */
+.header {
+  background: var(--azul);
+  padding: 1rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 12px rgba(0,61,124,0.2);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.header-logo { height: 30px; width: auto; display: block; }
+.header-titulo {
+  font-family: 'DM Serif Display', serif;
+  color: var(--blanco); font-size: 1rem;
+  display: none;
+}
+.buscador-wrap { flex: 1; max-width: 420px; position: relative; }
+.buscador {
+  width: 100%; padding: 0.55rem 1rem 0.55rem 2.5rem;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 8px; background: rgba(255,255,255,0.12);
+  color: var(--blanco); font-size: 0.85rem; font-family: 'Inter', sans-serif;
+  outline: none;
+}
+.buscador::placeholder { color: rgba(255,255,255,0.55); }
+.buscador:focus { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.18); }
+.buscador-icon {
+  position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
+  color: rgba(255,255,255,0.55); pointer-events: none;
+}
+.header-count {
+  font-size: 0.75rem; color: rgba(255,255,255,0.65);
+  white-space: nowrap;
+}
+
+/* LAYOUT */
+.layout { display: flex; min-height: calc(100vh - 56px); }
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px; flex-shrink: 0;
+  background: var(--blanco);
+  border-right: 1px solid var(--gris-borde);
+  padding: 1.25rem 0;
+  position: sticky; top: 56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+.sidebar-section { margin-bottom: 0.25rem; }
+.sidebar-seccion-btn {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 0.7rem 1.25rem;
+  background: none; border: none;
+  font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600;
+  color: var(--azul); cursor: pointer; text-align: left;
+  transition: background 0.15s;
+}
+.sidebar-seccion-btn:hover { background: var(--celeste-claro); }
+.sidebar-seccion-btn.activa { background: var(--celeste-claro); }
+.sidebar-chevron { transition: transform 0.2s; font-size: 0.7rem; color: var(--gris-medio); }
+.sidebar-seccion-btn.activa .sidebar-chevron { transform: rotate(180deg); }
+.sidebar-subsecciones { display: none; }
+.sidebar-subsecciones.visible { display: block; }
+.sidebar-sub-btn {
+  width: 100%; display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1.25rem 0.5rem 2rem;
+  background: none; border: none;
+  font-family: 'Inter', sans-serif; font-size: 0.78rem;
+  color: var(--gris-texto); cursor: pointer; text-align: left;
+  transition: all 0.15s; border-left: 2px solid transparent; margin-left: 0;
+}
+.sidebar-sub-btn:hover { color: var(--azul); background: #F8FAFC; }
+.sidebar-sub-btn.activo { color: var(--celeste); font-weight: 600; border-left-color: var(--celeste); background: var(--celeste-claro); }
+.sidebar-sub-count {
+  margin-left: auto; font-size: 0.68rem; font-weight: 600;
+  background: var(--gris-fondo); color: var(--gris-medio);
+  padding: 0.1rem 0.45rem; border-radius: 10px;
+}
+.sidebar-divider { height: 1px; background: var(--gris-borde); margin: 0.75rem 1.25rem; }
+.sidebar-filtros-titulo {
+  padding: 0.5rem 1.25rem 0.35rem;
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--gris-medio);
+}
+.filtro-grupo { padding: 0.25rem 1.25rem 0.5rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.filtro-chip {
+  padding: 0.25rem 0.65rem; border-radius: 20px;
+  font-size: 0.72rem; font-weight: 500;
+  border: 1.5px solid var(--gris-borde);
+  background: none; cursor: pointer; font-family: 'Inter', sans-serif;
+  color: var(--gris-texto); transition: all 0.15s;
+}
+.filtro-chip:hover { border-color: var(--celeste); color: var(--celeste); }
+.filtro-chip.activo { background: var(--celeste); border-color: var(--celeste); color: white; font-weight: 600; }
+
+/* CONTENIDO */
+.contenido { flex: 1; padding: 1.5rem; min-width: 0; }
+.seccion-titulo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem; color: var(--azul);
+  margin-bottom: 0.25rem;
+}
+.seccion-desc { font-size: 0.82rem; color: var(--gris-medio); margin-bottom: 1.25rem; }
+.subseccion-titulo {
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--gris-medio);
+  margin: 1.5rem 0 0.75rem; padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--gris-borde);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.85rem; }
+.vacio { text-align: center; padding: 3rem 1rem; color: var(--gris-medio); font-size: 0.9rem; }
+
+/* CARDS */
+.card {
+  background: var(--blanco); border-radius: 10px;
+  border: 1.5px solid var(--gris-borde);
+  padding: 1rem 1.1rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.card:hover { border-color: #B8D4F0; box-shadow: 0 3px 12px rgba(0,61,124,0.08); }
+.card-top { display: flex; align-items: flex-start; gap: 0.65rem; }
+.tipo-badge {
+  flex-shrink: 0; border-radius: 5px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: white;
+  margin-top: 1px;
+}
+.tipo-PDF { background: var(--col-pdf); }
+.tipo-Curso { background: var(--col-curso); }
+.tipo-Video { background: var(--col-video); }
+.tipo-Podcast { background: var(--col-podcast); }
+.tipo-Excel { background: var(--col-excel); }
+.tipo-Doc { background: var(--col-doc); }
+
+.card-titulo { font-size: 0.88rem; font-weight: 600; line-height: 1.4; color: var(--gris-texto); flex: 1; }
+.card-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.card-inst { font-size: 0.75rem; color: var(--gris-medio); }
+.idioma-badge {
+  font-size: 0.65rem; font-weight: 600;
+  padding: 0.1rem 0.4rem; border-radius: 4px;
+  background: var(--gris-fondo); color: var(--gris-medio);
+  border: 1px solid var(--gris-borde);
+}
+.acceso-badge {
+  font-size: 0.67rem; font-weight: 600;
+  padding: 0.15rem 0.5rem; border-radius: 4px;
+}
+.acceso-libre { background: #EAFAF1; color: var(--verde); border: 1px solid #A9DFBF; }
+.acceso-cert { background: #FEF3E2; color: var(--ambar); border: 1px solid #FAD7A0; }
+.acceso-interno { background: #EEF2FF; color: #3730A3; border: 1px solid #C7D2FE; }
+.unidad-badge {
+  font-size: 0.65rem; font-weight: 600;
+  padding: 0.1rem 0.45rem; border-radius: 4px;
+  background: var(--celeste-claro); color: var(--azul);
+  border: 1px solid #B8D4F0;
+}
+.clase-badge {
+  font-size: 0.65rem; font-weight: 600;
+  padding: 0.1rem 0.45rem; border-radius: 4px;
+  background: #FEF3E2; color: var(--ambar);
+  border: 1px solid #FAD7A0;
+}
+.general-badge {
+  font-size: 0.65rem; font-weight: 600;
+  padding: 0.1rem 0.45rem; border-radius: 4px;
+  background: var(--gris-fondo); color: var(--gris-medio);
+  border: 1px solid var(--gris-borde);
+}
+.nivel-badge {
+  font-size: 0.65rem; font-weight: 700;
+  padding: 0.1rem 0.5rem; border-radius: 4px;
+}
+.nivel-badge.nivel-1 { background: var(--azul); color: white; }
+.nivel-badge.nivel-3 { background: var(--verde); color: white; }
+.card-tema { font-size: 0.72rem; color: var(--gris-medio); font-style: italic; }
+.card-desc { font-size: 0.8rem; color: #4A5568; line-height: 1.55; }
+.card-footer { margin-top: auto; display: flex; justify-content: flex-end; }
+.btn-ir {
+  font-size: 0.78rem; font-weight: 600;
+  padding: 0.4rem 0.9rem; border-radius: 6px;
+  background: var(--celeste-claro); color: var(--azul);
+  border: 1px solid #B8D4F0; text-decoration: none;
+  transition: background 0.15s;
+  display: inline-block;
+}
+.btn-ir:hover { background: #C5DFF8; }
+.btn-interno {
+  font-size: 0.78rem; color: var(--gris-medio);
+  padding: 0.4rem 0.9rem; border-radius: 6px;
+  background: var(--gris-fondo); border: 1px solid var(--gris-borde);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .contenido { padding: 1rem; }
+  .grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 900px) { .header-titulo { display: block; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div style="display:flex;align-items:center;gap:0.85rem">
+    <img src="data:image/png;base64,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" alt="UTN FRSF" class="header-logo" onerror="this.style.display='none'">
+    <div class="header-titulo">Bibliografía y Recursos · PFC</div>
+  </div>
+  <div class="buscador-wrap">
+    <svg class="buscador-icon" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8" stroke-width="2"/><path stroke-width="2" d="M21 21l-4.35-4.35"/></svg>
+    <input class="buscador" type="text" id="buscador" placeholder="Buscar recurso, tema o institución..." oninput="filtrar()">
+  </div>
+  <div class="header-count" id="headerCount">0 recursos</div>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar" id="sidebar">
+    <!-- Sección A -->
+    <div class="sidebar-section">
+      <button class="sidebar-seccion-btn activa" onclick="toggleSeccion(this, 'A')">
+        Sección A · Contenidos PFC
+        <span class="sidebar-chevron">▼</span>
+      </button>
+      <div class="sidebar-subsecciones visible" id="subsec-A">
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A1',this)">
+          A1 · Introducción y ciclo de vida <span class="sidebar-sub-count">6</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A2',this)">
+          A2 · Diagnóstico y árbol de problemas <span class="sidebar-sub-count">3</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A3',this)">
+          A3 · Análisis de actores <span class="sidebar-sub-count">3</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A4',this)">
+          A4 · Marco lógico y objetivos <span class="sidebar-sub-count">3</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A5',this)">
+          A5 · Evaluación económica <span class="sidebar-sub-count">6</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A6',this)">
+          A6 · Análisis de brechas <span class="sidebar-sub-count">5</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A7',this)">
+          A7 · Evaluación ambiental <span class="sidebar-sub-count">6</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A8',this)">
+          A8 · Marco legal <span class="sidebar-sub-count">4</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A9',this)">
+          A9 · Comunicación escrita <span class="sidebar-sub-count">4</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','A10',this)">
+          A10 · Comunicación oral <span class="sidebar-sub-count">4</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sección C -->
+    <div class="sidebar-section">
+      <button class="sidebar-seccion-btn" onclick="toggleSeccion(this, 'C')">
+        Sección B · Bibliografía de cátedra
+        <span class="sidebar-chevron">▼</span>
+      </button>
+      <div class="sidebar-subsecciones" id="subsec-C">
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','C1',this)">
+          C1 · Normativa institucional <span class="sidebar-sub-count">2</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','C2',this)">
+          C2 · CAI — ejercicio profesional <span class="sidebar-sub-count">7</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','C3',this)">
+          C3 · CEPAL — metodología de proyectos <span class="sidebar-sub-count">5</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','C4',this)">
+          C4 · Formulación de proyectos — CFI y DNP Colombia <span class="sidebar-sub-count">9</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','C5',this)">
+          C5 · DNIP — evaluación y brechas <span class="sidebar-sub-count">11</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','C6',this)">
+          C6 · Marco lógico — herramientas y ejemplos <span class="sidebar-sub-count">6</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','C7',this)">
+          C7 · Evaluación de proyectos — libros <span class="sidebar-sub-count">5</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','C8',this)">
+          C8 · Proyectos tipo — PROSAP/BID y GIRSAR <span class="sidebar-sub-count">11</span>
+        </button>
+        <button class="sidebar-sub-btn" onclick="toggleFiltro('sub','C9',this)">
+          C9 · La ingeniería civil — rol y futuro <span class="sidebar-sub-count">5</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-filtros-titulo">Filtrar por formato</div>
+    <div class="filtro-grupo">
+      <button class="filtro-chip" onclick="toggleFiltro('tipo','PDF',this)">PDF</button>
+      <button class="filtro-chip" onclick="toggleFiltro('tipo','Curso',this)">Curso</button>
+      <button class="filtro-chip" onclick="toggleFiltro('tipo','Video',this)">Video</button>
+      <button class="filtro-chip" onclick="toggleFiltro('tipo','Podcast',this)">Podcast</button>
+      <button class="filtro-chip" onclick="toggleFiltro('tipo','Excel',this)">Excel</button>
+      <button class="filtro-chip" onclick="toggleFiltro('tipo','Doc',this)">Doc interno</button>
+    </div>
+    <div class="sidebar-filtros-titulo">Filtrar por idioma</div>
+    <div class="filtro-grupo">
+      <button class="filtro-chip" onclick="toggleFiltro('idioma','ES',this)">Español</button>
+      <button class="filtro-chip" onclick="toggleFiltro('idioma','EN',this)">English</button>
+    </div>
+    <div class="sidebar-filtros-titulo">Filtrar por acceso</div>
+    <div class="filtro-grupo">
+      <button class="filtro-chip" onclick="toggleFiltro('acceso','libre',this)">Libre</button>
+      <button class="filtro-chip" onclick="toggleFiltro('acceso','cert',this)">Cert. pago</button>
+      <button class="filtro-chip" onclick="toggleFiltro('acceso','interno',this)">Interno</button>
+    </div>
+    <div class="sidebar-filtros-titulo">Filtrar por unidad (Bibliografía)</div>
+    <div class="filtro-grupo">
+      <button class="filtro-chip" onclick="toggleFiltro('unidad','U1',this)">U1</button>
+      <button class="filtro-chip" onclick="toggleFiltro('unidad','U2',this)">U2</button>
+      <button class="filtro-chip" onclick="toggleFiltro('unidad','U3',this)">U3</button>
+      <button class="filtro-chip" onclick="toggleFiltro('unidad','U4',this)">U4</button>
+    </div>
+    <div class="sidebar-filtros-titulo">Guía de Lectura (Bibliografía)</div>
+    <div class="filtro-grupo">
+      <button class="filtro-chip" onclick="toggleFiltro('guia','si',this)">Asignado en Guía de Lectura</button>
+    </div>
+    <div class="sidebar-filtros-titulo">Valoración (Bibliografía)</div>
+    <div class="filtro-grupo">
+      <button class="filtro-chip" onclick="toggleFiltro('nivel','1',this)">★ Fuente de Apuntes</button>
+      <button class="filtro-chip" onclick="toggleFiltro('nivel','3',this)">Recomendado</button>
+    </div>
+  </aside>
+
+  <main class="contenido" id="contenido"></main>
+</div>
+
+<script>
+const recursos = [
+// ==================== SECCIÓN A ====================
+// A1 — Introducción y ciclo de vida
+{id:'a1-1', sub:'A1', tipo:'PDF', titulo:'Manual de identificación, preparación y evaluación de proyectos de inversión pública', inst:'CEPAL / ILPES', idioma:'ES', acceso:'libre', desc:'Manual de referencia para todo el ciclo de vida de un proyecto de inversión: identificación, formulación, evaluación privada y social. Incluye árbol de problemas, diagnóstico y evaluación de impacto ambiental.', url:'https://repositorio.cepal.org/bitstreams/03c0aa00-6080-47e9-832e-312de97cbc00/download'},
+{id:'a1-2', sub:'A1', tipo:'Curso', titulo:'Diseño de Proyectos de Desarrollo (MOOC)', inst:'BID / AcademiaBID · Coursera', idioma:'ES', acceso:'cert', desc:'Herramientas fundamentales para diseñar proyectos de desarrollo sostenibles y evaluables. Basado en el Marco de Efectividad del BID. Acceso libre a todos los materiales, certificado opcional USD 29.', url:'https://cursos.iadb.org/es/indes/dise-o-de-proyectos-de-desarrollo-0'},
+{id:'a1-3', sub:'A1', tipo:'Curso', titulo:'Programa especializado: Diseño y Gestión de Proyectos de Desarrollo', inst:'BID / AcademiaBID · Coursera', idioma:'ES', acceso:'cert', desc:'Cinco cursos encadenados: diseño, formulación, gestión de riesgos, monitoreo y evaluación. El más completo del catálogo BID en esta temática.', url:'https://cursos.iadb.org/es/programas/gestion-proyectos-para-resultados'},
+{id:'a1-4', sub:'A1', tipo:'Curso', titulo:'Dimensiones de la infraestructura sostenible en un proyecto', inst:'BID / AcademiaBID', idioma:'ES', acceso:'libre', desc:'Las cuatro dimensiones de la infraestructura sostenible: social, ambiental, institucional y financiera. Incluye soluciones basadas en la naturaleza y asociaciones público-privadas.', url:'https://cursos.iadb.org/es/temas/infraestructura/dimensiones-infraestructura-sostenible-proyecto'},
+{id:'a1-5', sub:'A1', tipo:'Curso', titulo:'Infraestructura sostenible en la agenda de desarrollo', inst:'BID / AcademiaBID', idioma:'ES', acceso:'libre', desc:'Primer curso de la especialización en infraestructura sostenible. Explica por qué la infraestructura es clave para el crecimiento inclusivo en América Latina y el Caribe.', url:'https://cursos.iadb.org/es/temas/infraestructura'},
+{id:'a1-6', sub:'A1', tipo:'Video', titulo:'Charlas de Formulación de Proyectos de Inversión Pública en Colombia — Ciclo 1', inst:'DNP Colombia · Soporte PIIP', idioma:'ES', acceso:'libre', desc:'Serie de 3 charlas de capacitación oficial del Departamento Nacional de Planeación de Colombia sobre el ciclo completo de formulación: introducción e identificación, preparación, y evaluación/programación/transferencia. La playlist completa agrupa 4 cohortes (13 videos); estas son las más recientes y las más vistas.', url:'https://www.youtube.com/playlist?list=PLSQ5InROIIUELELlNAZVJ2R4mcaENPWU1'},
+
+// A2 — Diagnóstico y árbol de problemas
+{id:'a2-1', sub:'A2', tipo:'PDF', titulo:'Árbol de problemas y árbol de objetivos — guía práctica', inst:'UCIPFG', idioma:'ES', acceso:'libre', desc:'Guía paso a paso con ejemplos para construir el árbol de problemas, transformarlo en árbol de objetivos y derivar la estructura analítica del proyecto.', url:'https://www.ucipfg.com/Repositorio/ELAP/Cursos-Libres/PPGPSA/Modulo_3/MC_3/HT1_U3.pdf'},
+{id:'a2-2', sub:'A2', tipo:'Video', titulo:'Cómo hacer un árbol de problemas y objetivos — Marco Lógico', inst:'Canal Ingenio Empresa · YouTube', idioma:'ES', acceso:'libre', desc:'Tutorial con ejemplos prácticos para construir el árbol de problemas y transformarlo en árbol de objetivos. Uno de los videos más completos en español sobre el tema.', url:'https://www.youtube.com/watch?v=76OBJ3sYTVk'},
+{id:'a2-3', sub:'A2', tipo:'PDF', titulo:'Diagnóstico participativo: manejo de recursos naturales', inst:'FAO / Biblioteca Virtual ECAP', idioma:'ES', acceso:'libre', desc:'Manual de técnicas participativas para diagnóstico territorial: mapas comunitarios, transectos, calendarios estacionales, matrices de evaluación y más.', url:'https://www.fao.org/3/x5307s/x5307s00.htm'},
+
+// A3 — Análisis de actores
+{id:'a3-1', sub:'A3', tipo:'PDF', titulo:'Análisis de involucrados — Manual CEPAL cap. II', inst:'CEPAL / ILPES', idioma:'ES', acceso:'libre', desc:'Metodología para identificar, clasificar y analizar a los actores involucrados en un proyecto: beneficiarios, ejecutores, opositores e indiferentes.', url:'https://repositorio.cepal.org/bitstreams/03c0aa00-6080-47e9-832e-312de97cbc00/download'},
+{id:'a3-2', sub:'A3', tipo:'PDF', titulo:'Guía de formulación CFI — BFPI', inst:'CFI Argentina', idioma:'ES', acceso:'libre', desc:'Guía oficial del Consejo Federal de Inversiones para la formulación de proyectos de infraestructura pública en Argentina. Incluye análisis de actores y contexto institucional.', url:'https://docs.google.com/viewer?url=https://www.cfi.org.ar/'},
+{id:'a3-3', sub:'A3', tipo:'Curso', titulo:'Gestión Integral del Desarrollo Económico Territorial', inst:'BID / INDES', idioma:'ES', acceso:'cert', desc:'Dirigido a profesionales de gobiernos subnacionales. Cubre desarrollo productivo local, finanzas municipales, gestión de proyectos y asociaciones para el desarrollo.', url:'https://cursos.iadb.org/es/indes/gesti-n-integral-del-desarrollo-econ-mico-territorial'},
+
+// A4 — Marco lógico
+{id:'a4-1', sub:'A4', tipo:'PDF', titulo:'Marco Lógico: metodología para la planificación y evaluación (Serie Manuales N°42)', inst:'CEPAL', idioma:'ES', acceso:'libre', desc:'Manual de referencia de CEPAL sobre la Metodología del Marco Lógico. Cubre desde el árbol de problemas hasta la construcción de indicadores SMART y la matriz completa.', url:'https://repositorio.cepal.org/items/a5afba24-8e93-4e3c-b7e2-36c97abde7d2'},
+{id:'a4-2', sub:'A4', tipo:'Video', titulo:'Marco Lógico: árbol de problemas y matriz — serie de videos', inst:'Canal Marco Lógico · YouTube', idioma:'ES', acceso:'libre', desc:'Serie de videos didácticos sobre la Metodología de Marco Lógico: análisis de problemas, árbol de objetivos, análisis de alternativas y construcción de la matriz.', url:'https://www.youtube.com/watch?v=76OBJ3sYTVk'},
+{id:'a4-3', sub:'A4', tipo:'PDF', titulo:'Formulación de programas con la Metodología de Marco Lógico', inst:'CEPAL / ILPES · Aldunate & Córdoba', idioma:'ES', acceso:'libre', desc:'Manual técnico de 2011 que cubre paso a paso la formulación con Marco Lógico, desde el análisis de la situación hasta la matriz completa con indicadores y supuestos.', url:'https://repositorio.sena.edu.co/bitstream/handle/11404/8032/cartilla-resumen-marco-logico-para-formulacion-de-proyectos.pdf'},
+
+// A5 — Evaluación económica
+{id:'a5-1', sub:'A5', tipo:'PDF', titulo:'Guía de evaluación ex ante — Esquema general', inst:'DNIP Argentina · 2026', idioma:'ES', acceso:'libre', desc:'Guía oficial argentina de evaluación ex ante para proyectos de inversión pública. Cubre análisis costo-beneficio, análisis costo-eficiencia, indicadores VAN y TIR.', url:'https://www.argentina.gob.ar/economia/politicaeconomica/inversion-publica'},
+{id:'a5-2', sub:'A5', tipo:'PDF', titulo:'Guía de evaluación ex ante — Sector Transporte', inst:'DNIP Argentina · 2026', idioma:'ES', acceso:'libre', desc:'Metodología específica para evaluación económica de proyectos de transporte vial, ferroviario y fluvial. Incluye estimación de beneficios por ahorro de tiempo y costos de operación vehicular.', url:'https://www.argentina.gob.ar/economia/politicaeconomica/inversion-publica'},
+{id:'a5-3', sub:'A5', tipo:'PDF', titulo:'Guía de evaluación ex ante — Alta tensión', inst:'DNIP Argentina · 2026', idioma:'ES', acceso:'libre', desc:'Metodología para proyectos de infraestructura eléctrica de alta tensión: líneas de transmisión, estaciones transformadoras.', url:'https://www.argentina.gob.ar/economia/politicaeconomica/inversion-publica'},
+{id:'a5-4', sub:'A5', tipo:'PDF', titulo:'Guía de evaluación ex ante — Gasoductos', inst:'DNIP Argentina · 2026', idioma:'ES', acceso:'libre', desc:'Metodología para proyectos de infraestructura gasífera: gasoductos de transporte y distribución.', url:'https://www.argentina.gob.ar/economia/politicaeconomica/inversion-publica'},
+{id:'a5-5', sub:'A5', tipo:'PDF', titulo:'Guía ex post — Evaluación de terminación y de resultados', inst:'DNIP Argentina · 2026', idioma:'ES', acceso:'libre', desc:'Guía para la evaluación ex post de proyectos de inversión pública: evaluación de terminación y evaluación de resultados a los 5 años de operación.', url:'https://www.argentina.gob.ar/economia/politicaeconomica/inversion-publica'},
+{id:'a5-6', sub:'A5', tipo:'Curso', titulo:'Financiamiento en proyectos de infraestructura sostenible', inst:'BID / AcademiaBID', idioma:'ES', acceso:'libre', desc:'Tercer curso de la especialización en infraestructura sostenible del BID. Cubre fuentes de financiamiento, estructuras de proyecto y análisis financiero básico.', url:'https://cursos.iadb.org/es/temas/infraestructura'},
+
+// A6 — Análisis de brechas
+{id:'a6-1', sub:'A6', tipo:'PDF', titulo:'Guía metodológica de brechas sectoriales de infraestructura', inst:'DNIP Argentina · 2023', idioma:'ES', acceso:'libre', desc:'Metodología oficial argentina para el cálculo de brechas de infraestructura por sector. Incluye conceptos de brecha efectiva, por UDM y por provincia.', url:'https://www.argentina.gob.ar/economia/politicaeconomica/inversion-publica'},
+{id:'a6-2', sub:'A6', tipo:'Excel', titulo:'Planilla estándar de brechas sectoriales 2024', inst:'DNIP Argentina', idioma:'ES', acceso:'libre', desc:'Formulario Excel oficial para el cálculo y carga de brechas de infraestructura. Tres solapas: brecha efectiva por UDM, brecha por provincia, dimensión física e indicadores.', url:'https://www.argentina.gob.ar/economia/politicaeconomica/inversion-publica'},
+{id:'a6-3', sub:'A6', tipo:'Curso', titulo:'Análisis del Riesgo de Desastres y Cambio Climático en Proyectos de Infraestructura', inst:'BID / AcademiaBID', idioma:'ES', acceso:'libre', desc:'Cómo incorporar el análisis de riesgo de desastres y cambio climático en la formulación y evaluación de proyectos de infraestructura.', url:'https://cursos.iadb.org/es/temas/infraestructura/analisis-riesgo-desastres-cambio-climatico-proyectos-infraestructura'},
+{id:'a6-4', sub:'A6', tipo:'Curso', titulo:'Análisis cualitativo y cuantitativo del riesgo de desastres', inst:'BID / AcademiaBID', idioma:'ES', acceso:'libre', desc:'Metodologías para identificar, analizar y gestionar el riesgo de desastres naturales en proyectos de desarrollo e infraestructura.', url:'https://cursos.iadb.org/es/temas/infraestructura/analisis-cualitativo-cuantitativo-riesgo-desastres'},
+{id:'a6-5', sub:'A6', tipo:'Curso', titulo:'Riesgos de desastres en proyectos de infraestructura', inst:'BID / Coursera', idioma:'ES', acceso:'cert', desc:'Curso de la especialización BID "Análisis de riesgos de desastres y cambio climático". Contenido y evaluaciones gratuitos (inscripción libre), certificado compartible con costo. 6 horas, nivel inicial.', url:'https://www.coursera.org/learn/riesgos-de-desastres-en-proyectos-de-infraestructura'},
+
+// A7 — Evaluación ambiental
+{id:'a7-1', sub:'A7', tipo:'PDF', titulo:'Guía para la elaboración de Estudios de Impacto Ambiental', inst:'Ministerio de Ambiente · Argentina', idioma:'ES', acceso:'libre', desc:'Guía oficial argentina para elaborar EsIA. Cubre procedimiento, encuadre normativo nacional y provincial, contenidos del estudio, participación pública y cambio climático.', url:'https://www.argentina.gob.ar/sites/default/files/guia_elaboracion_eia-2.pdf'},
+{id:'a7-2', sub:'A7', tipo:'PDF', titulo:'Evaluación y estudio de impacto ambiental — Infraestructura hidráulica y civil', inst:'UNLP · Fac. de Ingeniería', idioma:'ES', acceso:'libre', desc:'Libro de acceso libre de la UNLP, escrito desde la experiencia en grandes obras civiles argentinas. Cubre todo el ciclo del EsIA desde la concepción hasta la gestión del proyecto.', url:'https://libros.unlp.edu.ar/index.php/unlp/catalog/book/2534'},
+{id:'a7-3', sub:'A7', tipo:'PDF', titulo:'Guía para identificación y caracterización de impactos ambientales (SEIA)', inst:'MINAM Perú', idioma:'ES', acceso:'libre', desc:'Guía técnica con metodologías para identificar y caracterizar impactos ambientales en proyectos de inversión, aplicable a proyectos de infraestructura civil en general.', url:'https://www.iurisambiental.com/wp-content/uploads/2022/04/Guia-Impactos.pdf'},
+{id:'a7-4', sub:'A7', tipo:'Curso', titulo:'Biodiversidad en Estudios de Impacto Ambiental (BEIA)', inst:'BID / AcademiaBID', idioma:'ES', acceso:'libre', desc:'Cómo incorporar la evaluación de biodiversidad en los estudios de impacto ambiental de proyectos de infraestructura, siguiendo los estándares del BID.', url:'https://cursos.iadb.org/es/temas/gestion-riesgo-ambiental-y-social/biodiversidad-en-estudios-de-impacto-ambiental-beia'},
+{id:'a7-5', sub:'A7', tipo:'Curso', titulo:'Marco de Política Ambiental y Social del BID', inst:'BID / AcademiaBID', idioma:'ES', acceso:'libre', desc:'Normas de desempeño ambiental y social que aplican a los proyectos financiados por el BID, con énfasis en gestión de riesgos e involucramiento de partes interesadas.', url:'https://cursos.iadb.org/es/temas/gestion-riesgo-ambiental-y-social'},
+{id:'a7-6', sub:'A7', tipo:'Curso', titulo:'Agua en América Latina: abundancia en medio de la escasez mundial', inst:'BID / AcademiaBID', idioma:'ES', acceso:'libre', desc:'Panorama regional del recurso hídrico en América Latina: disponibilidad, uso, eficiencia, saneamiento y desafíos futuros. Muy útil para proyectos de agua y saneamiento.', url:'https://cursos.iadb.org/es/temas/economia-y-desarrollo/agua-en-am-rica-latina-abundancia-en-medio-de-la-escasez-mundial'},
+
+// A8 — Marco legal
+{id:'a8-1', sub:'A8', tipo:'Doc', titulo:'Res. CD N.° 564/2025 — Reglamento PFC UTN FRSF', inst:'UTN FRSF', idioma:'ES', acceso:'interno', desc:'Reglamento institucional que regula el Proyecto Final de Carrera en UTN FRSF. Define requisitos, etapas, tribunal, modalidades y criterios de aprobación.', url:'#'},
+{id:'a8-2', sub:'A8', tipo:'Doc', titulo:'Ord. UTN N.° 1853 — Plan de estudios Ingeniería Civil 2023', inst:'UTN', idioma:'ES', acceso:'interno', desc:'Diseño curricular de la carrera de Ingeniería Civil Plan 2023. Define competencias, estructura del plan, horas cátedra y requisitos de egreso.', url:'#'},
+{id:'a8-3', sub:'A8', tipo:'PDF', titulo:'Reglamento de Evaluación de Impacto Ambiental', inst:'Administración de Parques Nacionales · Argentina', idioma:'ES', acceso:'libre', desc:'Marco normativo para EIA en áreas bajo jurisdicción de APN. Referencia útil para proyectos en entornos naturales protegidos o sus zonas de influencia.', url:'https://sib.gob.ar/archivos/Reglamento_de_Evaluacion_de_Impacto_Ambiental.pdf'},
+{id:'a8-4', sub:'A8', tipo:'Curso', titulo:'Asociaciones Público-Privadas: identificación y preparación', inst:'BID / AcademiaBID', idioma:'ES', acceso:'libre', desc:'Cómo identificar proyectos aptos para APP, estructura de los contratos, riesgos y lecciones aprendidas en América Latina.', url:'https://cursos.iadb.org/es/temas/desarrollo-instituciones/asociaciones-publico-privadas-retos-lecciones-aprendidas-soluciones-innovadoras-en-america'},
+
+// A9 — Comunicación escrita
+{id:'a9-1', sub:'A9', tipo:'Doc', titulo:'Guía A — Informe técnico y Guía B — Memoria descriptiva', inst:'Cátedra PFC UTN FRSF', idioma:'ES', acceso:'interno', desc:'Documentos de referencia de la cátedra para la redacción del informe técnico final y la memoria descriptiva del PFC.', url:'#'},
+{id:'a9-2', sub:'A9', tipo:'PDF', titulo:'Comunicación técnica en ingeniería: redacción y exposición', inst:'OCW Universidad del País Vasco (UPV/EHU)', idioma:'ES', acceso:'libre', desc:'Notas de curso universitario sobre búsqueda bibliográfica, redacción técnica de informes y presentaciones orales en ingeniería. Muy alineado con el PFC.', url:'https://ocw.ehu.eus/mod/resource/view.php?id=40748'},
+{id:'a9-3', sub:'A9', tipo:'Curso', titulo:'Technical Report Writing for Engineers', inst:'Coursera · University of Sheffield', idioma:'EN', acceso:'cert', desc:'Curso de 6 semanas sobre escritura de informes técnicos de ingeniería. Cubre estructura, estilo, argumentación y revisión. Subtítulos en español disponibles.', url:'https://www.coursera.org/learn/technical-report-writing-for-engineers'},
+{id:'a9-4', sub:'A9', tipo:'Video', titulo:'Cómo estructurar y redactar un informe técnico', inst:'OCW EHU · YouTube', idioma:'ES', acceso:'libre', desc:'Serie de videoclases sobre estructura del informe técnico, estilo de redacción en ingeniería, uso de figuras y tablas, y citación de fuentes.', url:'https://www.youtube.com/results?search_query=redacci%C3%B3n+informe+t%C3%A9cnico+ingenier%C3%ADa'},
+
+// A10 — Comunicación oral
+{id:'a10-1', sub:'A10', tipo:'Doc', titulo:'Guía D — Presentaciones y Guía F — Defensa oral', inst:'Cátedra PFC UTN FRSF', idioma:'ES', acceso:'interno', desc:'Guías de la cátedra para el diseño de presentaciones técnicas y la preparación de la defensa oral ante el tribunal examinador.', url:'#'},
+{id:'a10-2', sub:'A10', tipo:'Curso', titulo:'Effective Communication: Writing, Design, and Presentation', inst:'Coursera · University of Colorado', idioma:'EN', acceso:'cert', desc:'Comunicación profesional en tres módulos: escritura, diseño visual de documentos y presentaciones orales. Muy práctico y bien evaluado.', url:'https://www.coursera.org/learn/effective-communication'},
+{id:'a10-3', sub:'A10', tipo:'Podcast', titulo:'Ingegeek — El podcast de la Ingeniería Civil', inst:'Spotify · Apple Podcasts', idioma:'ES', acceso:'libre', desc:'Podcast de un ingeniero civil latinoamericano sobre temas técnicos, herramientas, carrera profesional y comunicación en la ingeniería. Muy cercano al perfil del PFC.', url:'https://open.spotify.com/show/6BIfgee95ITK0xuOUtkySp'},
+{id:'a10-4', sub:'A10', tipo:'Podcast', titulo:'Curioseando en la Ingeniería Civil', inst:'Colegio de Ing. Técnicos de Obras Públicas · Spotify', idioma:'ES', acceso:'libre', desc:'Podcast institucional sobre grandes infraestructuras, estructuras y conocimientos técnicos de la ingeniería civil. Producido por profesionales en activo.', url:'https://open.spotify.com/show/3Q27Gitk0ItPpsSAWwiqj0'},
+
+// ==================== SECCIÓN C ====================
+// C1 — Normativa institucional
+{id:'c1-1', sub:'C1', tipo:'Doc', titulo:'Reglamento General de Proyecto Final de Carrera — Res. CD N.° 564/2025', inst:'UTN FRSF', idioma:'ES', acceso:'interno', clase:'Clase 5', unidad:'U1', nivel:'1', desc:'Lectura obligatoria completa de la Clase 5. Norma vigente que regula el PFC: requisitos, cuerpo académico, procedimientos, contenido del informe final y evaluación.', url:'bibliografia/C1/c1-01-reglamento-pfc-res-cd-564-2025.pdf'},
+{id:'c1-2', sub:'C1', tipo:'Doc', titulo:'Ordenanza UTN N.° 1853 — Diseño Curricular de Ingeniería Civil (Plan 2023)', inst:'UTN', idioma:'ES', acceso:'interno', clase:'Clase 5 (complementaria)', unidad:'U1', desc:'Lectura complementaria de la Clase 5 (solo perfil del egresado y tabla de competencias). Diseño curricular de Ingeniería Civil Plan 2023.', url:'bibliografia/C1/c1-02-ordenanza-1853-plan-ing-civil.pdf'},
+
+// C2 — CAI: ejercicio profesional
+{id:'c2-1', sub:'C2', tipo:'PDF', titulo:'Alcances de Ingeniería (SC01)', inst:'Centro Argentino de Ingenieros (CAI)', idioma:'ES', acceso:'interno', tema:'alcances profesionales, servicios de ingeniería, ejercicio profesional', nivel:'1', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general del CAI sobre qué constituye un servicio de ingeniería.', url:'bibliografia/C2/c2-01-alcances-de-ingenieria.pdf'},
+{id:'c2-2', sub:'C2', tipo:'PDF', titulo:'Alcances de Infraestructura', inst:'Centro Argentino de Ingenieros (CAI)', idioma:'ES', acceso:'interno', clase:'Clases 3 y 4', unidad:'U1', nivel:'1', desc:'Lectura complementaria de la Clase 3 (introducción y tabla de fases/AACE) y lectura obligatoria de la Clase 4 (anexo según tipología de proyecto).', url:'bibliografia/C2/c2-02-alcances-de-infraestructura.pdf'},
+{id:'c2-3', sub:'C2', tipo:'PDF', titulo:'Ética y Responsabilidad Profesional (SC03)', inst:'Centro Argentino de Ingenieros (CAI)', idioma:'ES', acceso:'interno', clase:'Clase 5', unidad:'U1', desc:'Lectura obligatoria completa de la Clase 5 (Canon de Ética de Ingenieros del CAI).', url:'bibliografia/C2/c2-03-etica-y-responsabilidad-profesional.pdf'},
+{id:'c2-4', sub:'C2', tipo:'PDF', titulo:'Gestión de Proyectos de Ingeniería (SC06)', inst:'Centro Argentino de Ingenieros (CAI)', idioma:'ES', acceso:'interno', tema:'gestión de proyectos de ingeniería, planificación y control', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general del CAI.', url:'bibliografia/C2/c2-04-gestion-de-proyectos-de-ingenieria.pdf'},
+{id:'c2-5', sub:'C2', tipo:'PDF', titulo:'Gestión Básica de Ingeniería en Proyectos (SC14)', inst:'Centro Argentino de Ingenieros (CAI)', idioma:'ES', acceso:'interno', tema:'gestión de proyectos, introducción', nivel:'1', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general del CAI.', url:'bibliografia/C2/c2-05-gestion-basica-de-ingenieria-en-proyectos.pdf'},
+{id:'c2-6', sub:'C2', tipo:'PDF', titulo:'Planificación en Proyectos de Ingeniería (SC15)', inst:'Centro Argentino de Ingenieros (CAI)', idioma:'ES', acceso:'interno', tema:'planificación de proyectos de ingeniería', nivel:'1', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general del CAI.', url:'bibliografia/C2/c2-06-planificacion-en-proyectos-de-ingenieria.pdf'},
+{id:'c2-7', sub:'C2', tipo:'PDF', titulo:'Gestión del Conocimiento (SC17)', inst:'Centro Argentino de Ingenieros (CAI)', idioma:'ES', acceso:'interno', tema:'gestión del conocimiento', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general del CAI.', url:'bibliografia/C2/c2-07-gestion-del-conocimiento.pdf'},
+
+// C3 — CEPAL: metodología de proyectos
+{id:'c3-1', sub:'C3', tipo:'PDF', titulo:'Manual de licitaciones públicas (Serie Manuales N.° 21)', inst:'CEPAL / ILPES', idioma:'ES', acceso:'interno', tema:'licitaciones públicas, contratación de obra pública', nivel:'3', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general sobre licitaciones.', url:'bibliografia/C3/c3-01-manual-licitaciones-publicas.pdf'},
+{id:'c3-2', sub:'C3', tipo:'PDF', titulo:'Metodología general de identificación, preparación y evaluación de proyectos (Serie Manuales N.° 39)', inst:'Ortegón, Pacheco y Roura — CEPAL/ILPES (2005)', idioma:'ES', acceso:'interno', clase:'Clases 15, 16 y 18', unidad:'U3', nivel:'1', desc:'Lectura obligatoria de las Clases 15 (estudio técnico), 16 (costos y beneficios) y 18 (viabilidad institucional). Citado como fuente en los Apuntes U2 y U3. Autoría corregida: el catálogo tenía "Prieto" — el tercer autor de la N.° 39 es Horacio Roura, según coinciden CEPAL y las citas internas de los Apuntes.', url:'bibliografia/C3/c3-02-metodologia-general-proyectos.pdf'},
+{id:'c3-3', sub:'C3', tipo:'PDF', titulo:'Metodología del marco lógico para la planificación, el seguimiento y la evaluación (Serie Manuales N.° 42)', inst:'Ortegón, Pacheco y Prieto — CEPAL/ILPES (2005)', idioma:'ES', acceso:'interno', clase:'Clases 7, 8, 10, 11, 13 y 20', unidad:'U2, U3', nivel:'1', desc:'Columna vertebral bibliográfica del Marco Lógico: lectura complementaria en Clases 7, 8, 10, 11 y 13, lectura obligatoria en la Clase 20, y fuente citada explícitamente en los Apuntes U2 y U3. Nota: la Guía de Lectura de la Clase 8 la cita por error como "Serie N.° 39"; el número correcto es 42. Autoría corregida: el catálogo tenía "Roura" — el tercer autor de la N.° 42 es Adriana Prieto, confirmado por CEPAL y por las citas internas de los Apuntes.', url:'bibliografia/C3/c3-03-metodologia-marco-logico.pdf'},
+{id:'c3-4', sub:'C3', tipo:'PDF', titulo:'Evaluación multicriterio para programas y proyectos públicos (Serie Manuales N.° 58)', inst:'Contreras y Pacheco — CEPAL/ILPES (2009)', idioma:'ES', acceso:'interno', clase:'Clase 14', unidad:'U3', nivel:'1', desc:'Lectura obligatoria (Cap. 2-3) y complementaria (Cap. 4, método AHP) de la Clase 14.', url:'bibliografia/C3/c3-04-matriz-multicriterio.pdf'},
+{id:'c3-5', sub:'C3', tipo:'PDF', titulo:'Formulación de programas con la metodología de marco lógico (Serie Manuales N.° 68)', inst:'CEPAL / ILPES', idioma:'ES', acceso:'interno', tema:'marco lógico, formulación de programas', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C3/c3-05-formulacion-programas-marco-logico.pdf'},
+
+// C4 — CFI: formulación y ficha ambiental
+{id:'c4-1', sub:'C4', tipo:'PDF', titulo:'Guía para la formulación de proyectos a nivel de factibilidad — BFPI', inst:'Consejo Federal de Inversiones (CFI)', idioma:'ES', acceso:'interno', clase:'Clases 15, 18 y 19', unidad:'U3', nivel:'1', desc:'Lectura complementaria de las Clases 15 (estudio técnico), 18 (organización para la ejecución) y 19 (riesgos de desastre).', url:'bibliografia/C4/c4-01-guia-formulacion-proyectos-bfpi-cfi.pdf'},
+{id:'c4-2', sub:'C4', tipo:'PDF', titulo:'Instructivo de lectura y uso — Guía de Formulación de Iniciativas (matriz de estructuración)', inst:'Programa de Apoyo a las Entidades Territoriales en la Estructuración de Proyectos — Colombia', idioma:'ES', acceso:'interno', unidad:'U3', nivel:'3', tema:'estructuración de proyectos, matriz, lectura horizontal, lectura vertical', desc:'Explica cómo leer y usar las 5 matrices de estructuración (recurso c4-3 a c4-7). Enfoque matricial de doble entrada para las fases de perfil, prefactibilidad y factibilidad — complementa el enfoque narrativo de la Guía BFPI del CFI (c4-1) con una forma distinta de organizar el mismo contenido.', url:'bibliografia/C4/c4-02-instructivo-guia-formulacion-iniciativas.pdf'},
+{id:'c4-3', sub:'C4', tipo:'PDF', titulo:'Matriz de Estructuración de Proyectos — Lectura Horizontal (Cortes)', inst:'DNP Colombia — Programa de Apoyo a Entes Territoriales', idioma:'ES', acceso:'interno', unidad:'U3', nivel:'3', tema:'estructuración de proyectos, matriz, lectura horizontal', desc:'Cruza cada variable de formulación (análisis de necesidades, alternativas, oferta y demanda, riesgos, precios de cuenta, etc.) a través de las tres fases de preinversión, en una misma vista.', url:'bibliografia/C4/c4-03-matriz-lectura-horizontal-cortes.pdf'},
+{id:'c4-4', sub:'C4', tipo:'PDF', titulo:'Matriz de Estructuración de Proyectos — Lectura Horizontal (Ficha por Variable)', inst:'DNP Colombia — Programa de Apoyo a Entes Territoriales', idioma:'ES', acceso:'interno', unidad:'U3', nivel:'3', tema:'estructuración de proyectos, matriz, lectura horizontal', desc:'Ficha individual por variable de formulación, con su definición y su tratamiento en cada fase de preinversión.', url:'bibliografia/C4/c4-04-matriz-horizontal-ficha-variable.pdf'},
+{id:'c4-5', sub:'C4', tipo:'PDF', titulo:'Matriz de Estructuración de Proyectos — Lectura Vertical (Perfil)', inst:'DNP Colombia — Programa de Apoyo a Entes Territoriales', idioma:'ES', acceso:'interno', unidad:'U3', nivel:'3', tema:'estructuración de proyectos, matriz, lectura vertical, perfil', desc:'Recorre de punta a punta la fase de Perfil: qué debe producirse y con qué información, en preparación y evaluación.', url:'bibliografia/C4/c4-05-matriz-vertical-perfil.pdf'},
+{id:'c4-6', sub:'C4', tipo:'PDF', titulo:'Matriz de Estructuración de Proyectos — Lectura Vertical (Prefactibilidad)', inst:'DNP Colombia — Programa de Apoyo a Entes Territoriales', idioma:'ES', acceso:'interno', unidad:'U3', nivel:'3', tema:'estructuración de proyectos, matriz, lectura vertical, prefactibilidad', desc:'Recorre de punta a punta la fase de Prefactibilidad, acumulando lo desarrollado en Perfil.', url:'bibliografia/C4/c4-06-matriz-vertical-prefactibilidad.pdf'},
+{id:'c4-7', sub:'C4', tipo:'PDF', titulo:'Matriz de Estructuración de Proyectos — Lectura Vertical (Factibilidad)', inst:'DNP Colombia — Programa de Apoyo a Entes Territoriales', idioma:'ES', acceso:'interno', unidad:'U3', nivel:'3', tema:'estructuración de proyectos, matriz, lectura vertical, factibilidad', desc:'Recorre de punta a punta la fase de Factibilidad, el nivel de mayor detalle antes de la ejecución.', url:'bibliografia/C4/c4-07-matriz-vertical-factibilidad.pdf'},
+{id:'c4-8', sub:'C4', tipo:'Doc', titulo:'Formulación de Proyectos: Introducción e Identificación (diapositivas)', inst:'DNP Colombia — Dirección de Proyectos e Información para la Inversión Pública', idioma:'ES', acceso:'interno', unidad:'U3', nivel:'3', tema:'formulación de proyectos, identificación, diapositivas, DNP, PIIP', desc:'Presentación que acompaña la serie de charlas DNP/PIIP ya incluida en A1 (a1-6) — mismo contenido en formato de lectura, útil para repasar sin ver el video completo.', url:'bibliografia/C4/c4-08-dnp-formulacion-identificacion-slides.pdf'},
+{id:'c4-9', sub:'C4', tipo:'PDF', titulo:'Lineamientos conceptuales de la Metodología General Ajustada (MGA) — Colombia', inst:'DNP Colombia — Dirección de Proyectos e Información para la Inversión Pública', idioma:'ES', acceso:'interno', unidad:'U3', nivel:'3', tema:'MGA, metodología general ajustada, marco conceptual, Colombia', desc:'Manual conceptual vigente (versión 2023) de la metodología con la que Colombia formula sus proyectos de inversión pública — completa el marco del cluster DNP (video, diapositivas y matrices) con la vista de conjunto.', url:'bibliografia/C4/c4-09-dnp-mga-documento-conceptual-2023.pdf'},
+
+// C5 — DNIP: guías de evaluación y brechas
+{id:'c5-1', sub:'C5', tipo:'PDF', titulo:'Guía General de Evaluación de Proyectos de Inversión', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', clase:'Clase 17 (según tipología)', unidad:'U3', nivel:'1', desc:'Guía sectorial DNIP: la Clase 17 remite a la guía correspondiente a la tipología del proyecto de cada estudiante. Esta es la guía de esquema general.', url:'bibliografia/C5/c5-01-guia-evaluacion-esquema-general.pdf'},
+{id:'c5-2', sub:'C5', tipo:'PDF', titulo:'Guía de Evaluación Ex Ante — Transporte Eléctrico de Alta Tensión', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', clase:'Clase 17 (si tu proyecto es de este sector)', unidad:'U3', desc:'Guía sectorial DNIP remitida en la Clase 17 para proyectos de transporte eléctrico de alta tensión.', url:'bibliografia/C5/c5-02-guia-evaluacion-ex-ante-alta-tension.pdf'},
+{id:'c5-3', sub:'C5', tipo:'PDF', titulo:'Guía de Evaluación Ex Ante — Gasoductos', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', clase:'Clase 17 (si tu proyecto es de este sector)', unidad:'U3', desc:'Guía sectorial DNIP remitida en la Clase 17 para proyectos de infraestructura gasífera.', url:'bibliografia/C5/c5-03-guia-evaluacion-ex-ante-gasoductos.pdf'},
+{id:'c5-4', sub:'C5', tipo:'PDF', titulo:'Guía para la Evaluación Ex Post de Proyectos de Inversión Pública', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', unidad:'U3', tema:'evaluación ex post, seguimiento de resultados', nivel:'3', desc:'Guía complementaria de evaluación ex post (terminación y resultados), no citada puntualmente en ninguna Guía de Lectura.', url:'bibliografia/C5/c5-04-guia-evaluacion-ex-post-metodologica.pdf'},
+{id:'c5-5', sub:'C5', tipo:'PDF', titulo:'Guía metodológica de brechas sectoriales de infraestructura', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', unidad:'U3', tema:'brechas de infraestructura, diagnóstico sectorial', nivel:'3', desc:'Guía complementaria sobre cálculo de brechas de infraestructura, no citada puntualmente en ninguna Guía de Lectura.', url:'bibliografia/C5/c5-05-guia-metodologica-brechas-sectoriales.pdf'},
+{id:'c5-6', sub:'C5', tipo:'Excel', titulo:'Planilla estándar de brechas sectoriales 2024', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', unidad:'U3', tema:'brechas de infraestructura, planilla de cálculo', desc:'Formulario Excel oficial de brechas de infraestructura, no citado puntualmente en ninguna Guía de Lectura.', url:'bibliografia/C5/c5-06-planilla-brechas-estandar-2024.xlsx'},
+{id:'c5-7', sub:'C5', tipo:'Excel', titulo:'Formulario de evaluación ex post actualizado (2026)', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', unidad:'U3', tema:'evaluación ex post, formulario', desc:'Formulario Excel oficial de evaluación ex post, no citado puntualmente en ninguna Guía de Lectura.', url:'bibliografia/C5/c5-07-formulario-ex-post-2026.xlsx'},
+{id:'c5-8', sub:'C5', tipo:'PDF', titulo:'Introducción al SNIP — Normativa y procedimientos', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', unidad:'U3', tema:'SNIP, normativa, sistema nacional de inversión pública', nivel:'1', desc:'Material de lectura oficial sobre el SNIP, no citado puntualmente en ninguna Guía de Lectura (el Apunte U3 3.4.7 lo resume).', url:'bibliografia/C5/c5-08-introduccion-snip-normativa-procedimientos.pdf'},
+{id:'c5-9', sub:'C5', tipo:'PDF', titulo:'Guía de Evaluación del Sector Agua Potable y Saneamiento', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', clase:'Clase 17 (si tu proyecto es de este sector)', unidad:'U3', desc:'Guía sectorial DNIP remitida en la Clase 17 para proyectos de agua potable y saneamiento.', url:'bibliografia/C5/c5-09-guia-evaluacion-sector-agua-potable-saneamiento.pdf'},
+{id:'c5-10', sub:'C5', tipo:'PDF', titulo:'Guía de Evaluación del Sector Residuos Sólidos Urbanos', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', clase:'Clase 17 (si tu proyecto es de este sector)', unidad:'U3', desc:'Guía sectorial DNIP remitida en la Clase 17 para proyectos de residuos sólidos urbanos.', url:'bibliografia/C5/c5-10-guia-evaluacion-sector-residuos-solidos.pdf'},
+{id:'c5-11', sub:'C5', tipo:'PDF', titulo:'Guía de Evaluación del Sector Transporte', inst:'Dirección Nacional de Inversión Pública (DNIP)', idioma:'ES', acceso:'interno', clase:'Clase 17 (si tu proyecto es de este sector)', unidad:'U3', desc:'Guía sectorial DNIP remitida en la Clase 17 para proyectos de transporte.', url:'bibliografia/C5/c5-11-guia-evaluacion-sector-transporte.pdf'},
+
+// C6 — Marco lógico: herramientas y ejemplos
+{id:'c6-1', sub:'C6', tipo:'PDF', titulo:'Matriz de Marco Lógico del Proyecto o Programa (MMLP)', inst:'Vanina Cicchellero — Cátedra PFC UTN FRSF', idioma:'ES', acceso:'interno', tema:'marco lógico, matriz, indicadores, medios de verificación, supuestos', nivel:'1', desc:'Plantilla propia de la cátedra, usada como herramienta de trabajo práctico en Unidad 2 y 3; no está citada como "lectura" puntual en ninguna Guía de Lectura.', url:'bibliografia/C6/c6-01-mmlp-vanina-cicchellero.pdf'},
+{id:'c6-2', sub:'C6', tipo:'PDF', titulo:'El Enfoque de Marco Lógico (EML) y el Problema Social como Punto de Partida de los Proyectos', inst:'Material de cátedra externa', idioma:'ES', acceso:'interno', tema:'marco lógico, problema social, punto de partida', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general sobre el problema social como origen del proyecto.', url:'bibliografia/C6/c6-02-enfoque-marco-logico-problema-social.pdf'},
+{id:'c6-3', sub:'C6', tipo:'PDF', titulo:'¿Cómo se define un problema social y se elaboran objetivos en los procesos de planificación? (Caja de Herramientas)', inst:'Jorge de la Fuente Olguín', idioma:'ES', acceso:'interno', tema:'problema social, árbol de objetivos, planificación participativa', nivel:'1', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C6/c6-03-como-se-define-problema-social-objetivos.pdf'},
+{id:'c6-4', sub:'C6', tipo:'PDF', titulo:'¿Qué es la Metodología de Marco Lógico y para qué sirve? (Caja de Herramientas)', inst:'Jorge de la Fuente Olguín', idioma:'ES', acceso:'interno', tema:'marco lógico, introducción metodológica', nivel:'1', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C6/c6-04-que-es-la-metodologia-de-marco-logico.pdf'},
+{id:'c6-5', sub:'C6', tipo:'PDF', titulo:'¿Cómo se construye un Indicador de Desempeño? (Caja de Herramientas)', inst:'Jorge de la Fuente Olguín', idioma:'ES', acceso:'interno', tema:'indicadores de desempeño, marco lógico', nivel:'1', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C6/c6-05-como-se-construye-un-indicador-de-desempeno.pdf'},
+{id:'c6-6', sub:'C6', tipo:'PDF', titulo:'Formulación de Proyectos bajo la Metodología del Marco Lógico', inst:'Fredy Yoverti Álvarez Fonseca y Ana María Jiménez Rodas', idioma:'ES', acceso:'interno', tema:'marco lógico, formulación de proyectos, casos', nivel:'1', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Libro completo de referencia general.', url:'bibliografia/C6/c6-06-libro-formulacion-proyectos-marco-logico.pdf'},
+
+// C7 — Evaluación de proyectos: libros de referencia
+{id:'c7-1', sub:'C7', tipo:'PDF', titulo:'Evaluación de Proyectos, 7.ª edición', inst:'Gabriel Baca Urbina', idioma:'ES', acceso:'interno', tema:'evaluación de proyectos, evaluación económica de inversiones', nivel:'1', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Libro clásico de referencia general.', url:'#'},
+{id:'c7-2', sub:'C7', tipo:'PDF', titulo:'Preparación y Evaluación de Proyectos', inst:'Nassir Sapag Chain (2008)', idioma:'ES', acceso:'interno', clase:'Clases 1 y 4', unidad:'U1', nivel:'1', desc:'Lectura obligatoria de la Clase 1 (concepto de proyecto) y la Clase 4 (tipologías de proyecto).', url:'#'},
+{id:'c7-3', sub:'C7', tipo:'PDF', titulo:'Evaluación Social de Proyectos, 13.ª edición', inst:'Ernesto R. Fontaine', idioma:'ES', acceso:'interno', clase:'Clases 2, 3 y 16', unidad:'U1, U3', nivel:'1', desc:'Lectura obligatoria de la Clase 2 (qué es un proyecto) y la Clase 3 (ciclo de vida); lectura complementaria de la Clase 16 (costo-beneficio social y precios de cuenta).', url:'#'},
+{id:'c7-4', sub:'C7', tipo:'PDF', titulo:'Evaluación de Proyectos Sociales', inst:'Ernesto Cohen y Rolando Franco', idioma:'ES', acceso:'interno', clase:'Clase 3', unidad:'U1', nivel:'1', desc:'Lectura obligatoria de la Clase 3 (las etapas del ciclo con enfoque social, Cuadro 10.1 ODEPLAN/CEPAL).', url:'#'},
+{id:'c7-5', sub:'C7', tipo:'PDF', titulo:'80 Herramientas para el Desarrollo Participativo: Diagnóstico, Planificación, Monitoreo y Evaluación', inst:'Frans Geilfus — IICA (2002)', idioma:'ES', acceso:'interno', clase:'Clases 7, 8, 9, 10 y 13', unidad:'U2, U3', nivel:'1', desc:'Fichas de herramientas participativas citadas como lectura obligatoria o complementaria en las Clases 7, 8, 9 y 10 (Unidad 2) y 13 (Unidad 3).', url:'bibliografia/C7/c7-05-geilfus-80-herramientas-desarrollo-participativo.pdf'},
+
+// C8 — Proyectos tipo: PROSAP/BID y GIRSAR
+{id:'c8-1', sub:'C8', tipo:'PDF', titulo:'Marco de Gestión Ambiental y Social (SGAS) — Cuerpo Principal', inst:'PROSAP / BID (AR-L1335)', idioma:'ES', acceso:'interno', tema:'gestión ambiental y social, PROSAP, BID, salvaguardas', nivel:'3', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general sobre salvaguardas ambientales y sociales.', url:'bibliografia/C8/c8-01-sgas-cuerpo-principal.pdf'},
+{id:'c8-2', sub:'C8', tipo:'PDF', titulo:'SGAS Anexo I — Categorización Ambiental y Social', inst:'PROSAP / BID', idioma:'ES', acceso:'interno', tema:'categorización de riesgo ambiental y social', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-02-sgas-anexo-i-categorizacion-ambiental-social.pdf'},
+{id:'c8-3', sub:'C8', tipo:'PDF', titulo:'SGAS Anexo II — Marco de Planificación para Pueblos Indígenas (MPPI)', inst:'PROSAP / BID', idioma:'ES', acceso:'interno', tema:'pueblos indígenas, planificación, salvaguardas sociales', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-03-sgas-anexo-ii-mppi-pueblos-indigenas.pdf'},
+{id:'c8-4', sub:'C8', tipo:'PDF', titulo:'SGAS Anexo III — Plan de Pueblos Indígenas (PPPI)', inst:'PROSAP / BID', idioma:'ES', acceso:'interno', tema:'pueblos indígenas, plan, salvaguardas sociales', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-04-sgas-anexo-iii-pppi.pdf'},
+{id:'c8-5', sub:'C8', tipo:'PDF', titulo:'SGAS Anexo IV — Marco de Política de Reasentamiento (MPR)', inst:'PROSAP / BID', idioma:'ES', acceso:'interno', tema:'reasentamiento involuntario, salvaguardas sociales', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-05-sgas-anexo-iv-mpr-reasentamiento.pdf'},
+{id:'c8-6', sub:'C8', tipo:'PDF', titulo:'SGAS Anexo V — Lineamientos de Patrimonio Cultural', inst:'PROSAP / BID', idioma:'ES', acceso:'interno', tema:'patrimonio cultural, evaluación ambiental', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-06-sgas-anexo-v-patrimonio-cultural.pdf'},
+{id:'c8-7', sub:'C8', tipo:'PDF', titulo:'SGAS Anexo VI — Gestión de Impactos y Riesgos sobre la Salud y la Seguridad', inst:'PROSAP / BID', idioma:'ES', acceso:'interno', tema:'salud y seguridad, gestión de riesgos, evaluación ambiental', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-07-sgas-anexo-vi-salud-seguridad.pdf'},
+{id:'c8-8', sub:'C8', tipo:'PDF', titulo:'SGAS Anexo XII — Perspectiva de Género', inst:'PROSAP / BID', idioma:'ES', acceso:'interno', tema:'perspectiva de género, evaluación social', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-08-sgas-anexo-xii-perspectiva-genero.pdf'},
+{id:'c8-9', sub:'C8', tipo:'PDF', titulo:'SGAS Anexo XIII — Gestión Ambiental y Social de Proyectos', inst:'PROSAP / BID', idioma:'ES', acceso:'interno', tema:'gestión ambiental y social, ciclo de proyecto', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-09-sgas-anexo-xiii-gestion-ambiental-social.pdf'},
+{id:'c8-10', sub:'C8', tipo:'PDF', titulo:'Reglamento Operativo PROSAP', inst:'Poder Ejecutivo Nacional (Resol. 2020-244-APN-MAGYP)', idioma:'ES', acceso:'interno', tema:'PROSAP, reglamento operativo, financiamiento', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-10-reglamento-operativo-prosap.pdf'},
+{id:'c8-11', sub:'C8', tipo:'PDF', titulo:'Guía para la Elaboración de Documentos de Proyectos a Nivel de Factibilidad — GIRSAR', inst:'Equipo de Formulación de Proyectos (DIPROSE)', idioma:'ES', acceso:'interno', tema:'factibilidad, gestión integral de riesgos, GIRSAR', nivel:'3', desc:'No citado como lectura asignada en ninguna Guía de Lectura. Material de referencia general.', url:'bibliografia/C8/c8-11-guia-girsar-elaboracion-proyectos-factibilidad.pdf'},
+
+// C9 — La ingeniería civil: rol y futuro de la profesión
+{id:'c9-1', sub:'C9', tipo:'PDF', titulo:'La Visión para la Ingeniería Civil en 2025', inst:'ASCE (basado en la Cumbre sobre el Futuro de la Ingeniería)', idioma:'ES', acceso:'interno', clase:'Clase 1', unidad:'U1', nivel:'1', desc:'Lectura obligatoria de la Clase 1 (pp. 15-24), en su versión traducida al español.', url:'bibliografia/C9/c9-01-asce-vision-ingenieria-civil-2025.pdf'},
+{id:'c9-2', sub:'C9', tipo:'PDF', titulo:'Engineering for Sustainable Development', inst:'UNESCO', idioma:'EN', acceso:'interno', clase:'Clase 2 (complementaria)', unidad:'U1', nivel:'1', desc:'Lectura complementaria de la Clase 2 (solo Executive Summary).', url:'bibliografia/C9/c9-02-unesco-engineering-sustainable-development.pdf'},
+{id:'c9-3', sub:'C9', tipo:'PDF', titulo:'The Home of Infrastructure — 2030 Strategy', inst:'ICE — Institution of Civil Engineers (Reino Unido)', idioma:'EN', acceso:'interno', clase:'Clase 4 (complementaria)', unidad:'U1', nivel:'1', desc:'Lectura complementaria de la Clase 4 (atributos Confiable / Sostenible / Inteligente).', url:'bibliografia/C9/c9-03-ice-strategy-2030.pdf'},
+{id:'c9-4', sub:'C9', tipo:'PDF', titulo:'Transforming Infrastructure Performance: Roadmap to 2030', inst:'Infrastructure and Projects Authority — IPA (Reino Unido)', idioma:'EN', acceso:'interno', clase:'Clase 2', unidad:'U1', nivel:'1', desc:'Lectura obligatoria de la Clase 2 (pp. 6-9).', url:'bibliografia/C9/c9-04-ipa-roadmap-to-2030.pdf'},
+{id:'c9-5', sub:'C9', tipo:'PDF', titulo:'Engineers 2030 — Final Report', inst:'National Engineering Policy Centre — NEPC (Reino Unido)', idioma:'EN', acceso:'interno', clase:'Clase 1 (complementaria)', unidad:'U1', nivel:'1', desc:'Lectura complementaria de la Clase 1 (Executive Summary y Cap. 1).', url:'bibliografia/C9/c9-05-nepc-engineers-2030-final-report.pdf'},];
+
+// ==================== ESTADO ====================
+let filtrosSub = [];
+let filtrosGuia = [];
+let filtrosTipo = [];
+let filtrosIdioma = [];
+let filtrosAcceso = [];
+let filtrosUnidad = [];
+let filtrosNivel = [];
+let textoBusqueda = '';
+
+// ==================== RENDER ====================
+function render() {
+  const contenido = document.getElementById('contenido');
+  let filtered = recursos;
+
+  // Todos los filtros son facetas independientes que se combinan (AND) sobre
+  // el catalogo completo. Por defecto (sin nada seleccionado) se ve todo.
+  if (filtrosSub.length) filtered = filtered.filter(r => filtrosSub.includes(r.sub));
+  if (filtrosGuia.includes('si')) filtered = filtered.filter(r => !!r.clase);
+  if (filtrosTipo.length) filtered = filtered.filter(r => filtrosTipo.includes(r.tipo));
+  if (filtrosIdioma.length) filtered = filtered.filter(r => filtrosIdioma.some(l => r.idioma.includes(l)));
+  if (filtrosAcceso.length) filtered = filtered.filter(r => filtrosAcceso.includes(r.acceso));
+  if (filtrosUnidad.length) filtered = filtered.filter(r => r.unidad && filtrosUnidad.some(u => r.unidad.includes(u)));
+  if (filtrosNivel.length) filtered = filtered.filter(r => filtrosNivel.includes(r.nivel));
+  if (textoBusqueda) {
+    const q = textoBusqueda.toLowerCase();
+    filtered = filtered.filter(r =>
+      r.titulo.toLowerCase().includes(q) ||
+      r.inst.toLowerCase().includes(q) ||
+      r.desc.toLowerCase().includes(q) ||
+      r.sub.toLowerCase().includes(q) ||
+      (r.tema && r.tema.toLowerCase().includes(q)) ||
+      (r.clase && r.clase.toLowerCase().includes(q))
+    );
+  }
+
+  document.getElementById('headerCount').textContent = filtered.length + ' recurso' + (filtered.length !== 1 ? 's' : '');
+
+  if (filtered.length === 0) {
+    contenido.innerHTML = '<div class="vacio">No se encontraron recursos con ese criterio de búsqueda.</div>';
+    return;
+  }
+
+  const subInfo = {
+    A1: { nombre: 'A1 · Introducción y ciclo de vida del proyecto', desc: 'Guías, cursos y herramientas para comprender el ciclo completo de formulación de proyectos de inversión pública.' },
+    A2: { nombre: 'A2 · Diagnóstico territorial y árbol de problemas', desc: 'Metodologías para identificar el problema central, sus causas y efectos, y herramientas de diagnóstico participativo.' },
+    A3: { nombre: 'A3 · Análisis de actores e involucrados', desc: 'Técnicas para identificar, clasificar y analizar a los actores relevantes para un proyecto.' },
+    A4: { nombre: 'A4 · Marco lógico y formulación de objetivos', desc: 'Metodología de Marco Lógico: árbol de objetivos, estructura analítica e indicadores SMART.' },
+    A5: { nombre: 'A5 · Evaluación económica y financiera', desc: 'Herramientas para el análisis costo-beneficio, VAN, TIR y fuentes de financiamiento público.' },
+    A6: { nombre: 'A6 · Análisis de brechas e infraestructura', desc: 'Metodologías para calcular brechas de infraestructura y análisis de riesgo de desastres.' },
+    A7: { nombre: 'A7 · Evaluación de impacto ambiental', desc: 'Guías y cursos para elaborar estudios de impacto ambiental y gestionar riesgos socioambientales.' },
+    A8: { nombre: 'A8 · Marco legal e institucional', desc: 'Normativa, reglamentos y cursos sobre el marco jurídico de los proyectos de ingeniería civil.' },
+    A9: { nombre: 'A9 · Comunicación técnica escrita', desc: 'Recursos para mejorar la redacción de informes técnicos, memorias descriptivas y documentación del PFC.' },
+    A10: { nombre: 'A10 · Comunicación oral y presentaciones', desc: 'Guías y recursos para preparar presentaciones técnicas y la defensa oral ante el tribunal.' },
+    C1: { nombre: 'C1 · Normativa institucional', desc: 'Reglamento de PFC y ordenanza del plan de estudios de Ingeniería Civil vigentes en UTN FRSF.' },
+    C2: { nombre: 'C2 · CAI — Ejercicio profesional', desc: 'Documentos del Centro Argentino de Ingenieros sobre alcances, gestión y ética del ejercicio profesional.' },
+    C3: { nombre: 'C3 · CEPAL — Metodología de proyectos', desc: 'Manuales de la Serie Manuales de CEPAL/ILPES sobre licitaciones, formulación y marco lógico.' },
+    C4: { nombre: 'C4 · Formulación de proyectos — CFI y DNP Colombia', desc: 'Guía de formulación BFPI del CFI (Argentina) y el enfoque matricial de estructuración de proyectos del DNP (Colombia): dos formas distintas de organizar las mismas fases de perfil, prefactibilidad y factibilidad.' },
+    C5: { nombre: 'C5 · DNIP — Guías de evaluación y brechas', desc: 'Guías oficiales argentinas de evaluación ex ante, ex post, sectoriales y de brechas de infraestructura.' },
+    C6: { nombre: 'C6 · Marco lógico — Herramientas y ejemplos', desc: 'Cajas de herramientas, libros y la matriz propia de la cátedra (MMLP) sobre marco lógico.' },
+    C7: { nombre: 'C7 · Evaluación de proyectos — Libros de referencia', desc: 'Libros clásicos de evaluación económica y social de proyectos (Baca Urbina, Sapag, Fontaine, Cohen y Franco).' },
+    C8: { nombre: 'C8 · Proyectos tipo — PROSAP/BID y GIRSAR', desc: 'Marco de Gestión Ambiental y Social (SGAS) de PROSAP/BID y guía GIRSAR de elaboración de proyectos a nivel de factibilidad.' },
+    C9: { nombre: 'C9 · La ingeniería civil — Rol y futuro de la profesión', desc: 'Informes internacionales (ASCE, UNESCO, ICE, IPA, NEPC) sobre el rol y el futuro de la ingeniería civil.' },
+  };
+
+  let info;
+  if (filtrosSub.length === 1) {
+    info = subInfo[filtrosSub[0]] || { nombre: filtrosSub[0], desc: '' };
+  } else if (filtrosSub.length > 1) {
+    info = { nombre: `${filtrosSub.length} secciones seleccionadas`, desc: filtrosSub.join(' · ') };
+  } else {
+    info = { nombre: 'Todos los recursos', desc: 'Bibliografía y recursos externos de la asignatura. Usá el buscador o los filtros del panel izquierdo para acotar la lista.' };
+  }
+  if (textoBusqueda) {
+    info = { nombre: 'Resultados de búsqueda', desc: `Coincidencias con "${textoBusqueda}"` + (filtrosSub.length ? ` dentro de ${info.nombre}` : '') };
+  }
+
+  let html = `<h2 class="seccion-titulo">${info.nombre}</h2>
+    <p class="seccion-desc">${info.desc}</p>
+    <div class="grid">`;
+
+  filtered.forEach(r => {
+    const accesoBadge = r.acceso === 'libre'
+      ? '<span class="acceso-badge acceso-libre">Acceso libre</span>'
+      : r.acceso === 'cert'
+      ? '<span class="acceso-badge acceso-cert">Contenido libre · Certificado pago</span>'
+      : '<span class="acceso-badge acceso-interno">Material interno cátedra</span>';
+
+    const btnIr = r.url && r.url !== '#'
+      ? `<a href="${r.url}" target="_blank" rel="noopener" class="btn-ir">Ir al recurso →</a>`
+      : `<span class="btn-interno">Disponible en el aula Moodle</span>`;
+
+    const idiomaLabel = r.idioma === 'ES' ? 'ES' : r.idioma === 'EN' ? 'EN' : r.idioma;
+    const unidadBadge = r.unidad ? `<span class="unidad-badge">${r.unidad}</span>` : '';
+    const claseBadge = r.clase ? `<span class="clase-badge">${r.clase}</span>` : '';
+    const nivelBadge = r.nivel === '1' ? `<span class="nivel-badge nivel-1">★ Fuente de los Apuntes</span>`
+      : r.nivel === '3' ? `<span class="nivel-badge nivel-3">Recomendado</span>` : '';
+    const generalBadge = (!r.clase && !r.nivel && r.sub && r.sub.startsWith('C')) ? `<span class="general-badge">Referencia general</span>` : '';
+    const temaLine = r.tema ? `<div class="card-tema">Temas: ${r.tema}</div>` : '';
+
+    html += `<div class="card">
+      <div class="card-top">
+        <span class="tipo-badge tipo-${r.tipo}">${r.tipo}</span>
+        <span class="card-titulo">${r.titulo}</span>
+      </div>
+      <div class="card-meta">
+        <span class="card-inst">${r.inst}</span>
+        <span class="idioma-badge">${idiomaLabel}</span>
+        ${accesoBadge}
+        ${unidadBadge}
+        ${nivelBadge}
+        ${claseBadge}
+        ${generalBadge}
+      </div>
+      <p class="card-desc">${r.desc}</p>
+      ${temaLine}
+      <div class="card-footer">${btnIr}</div>
+    </div>`;
+  });
+
+  html += '</div>';
+  contenido.innerHTML = html;
+}
+
+// ==================== NAVEGACIÓN ====================
+function toggleSeccion(btn, seccion) {
+  const subsec = document.getElementById('subsec-' + seccion);
+  const isOpen = subsec.classList.contains('visible');
+  btn.classList.toggle('activa', !isOpen);
+  subsec.classList.toggle('visible', !isOpen);
+}
+
+function toggleFiltro(tipo, valor, btn) {
+  let arr = tipo === 'sub' ? filtrosSub : tipo === 'guia' ? filtrosGuia : tipo === 'tipo' ? filtrosTipo : tipo === 'idioma' ? filtrosIdioma : tipo === 'acceso' ? filtrosAcceso : tipo === 'unidad' ? filtrosUnidad : filtrosNivel;
+  const idx = arr.indexOf(valor);
+  if (idx === -1) arr.push(valor);
+  else arr.splice(idx, 1);
+  btn.classList.toggle('activo');
+  render();
+}
+
+function filtrar() {
+  textoBusqueda = document.getElementById('buscador').value.trim();
+  render();
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  // Panel de Sección A abierto por defecto (solo para facilitar la navegación,
+  // no filtra nada); la lista arranca mostrando el catálogo completo.
+  document.getElementById('subsec-A').classList.add('visible');
+  document.querySelector('.sidebar-seccion-btn').classList.add('activa');
+  render();
+});
+</script>
+</body>
+</html>
