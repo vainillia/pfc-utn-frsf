@@ -238,7 +238,7 @@
           </div>
           <div class="meta-chip">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            10 preguntas
+            11 preguntas
           </div>
           <div class="meta-chip">
             <svg width="14" height="none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
@@ -351,6 +351,34 @@
       </div>
     </div>
 
+    <!-- P6: Situación laboral -->
+    <div class="pregunta-card" id="card-p6trabajo">
+      <div class="pregunta-label">Pregunta 6</div>
+      <div class="pregunta-texto">¿Trabajás actualmente?</div>
+      <div class="opciones-radio">
+        <label class="opcion-radio" onclick="seleccionarRadio('p6trabaja', 'si', this); mostrarCondicional('cond-p6trabajo', true); checkTrabajo()"><input type="radio" name="p6trabaja" value="si"><div class="radio-circulo"></div>Sí</label>
+        <label class="opcion-radio" onclick="seleccionarRadio('p6trabaja', 'no', this); mostrarCondicional('cond-p6trabajo', false); checkTrabajo()"><input type="radio" name="p6trabaja" value="no"><div class="radio-circulo"></div>No</label>
+      </div>
+
+      <div class="condicional" id="cond-p6trabajo">
+        <div style="margin-bottom:1rem">
+          <div style="font-size:0.83rem;font-weight:600;color:var(--gris-texto);margin-bottom:0.5rem">¿Cuántas horas semanales, aproximadamente?</div>
+          <div style="display:flex;align-items:center;gap:0.75rem">
+            <input class="input-num-simple" type="number" min="1" max="80" id="p6trabajo_horas" oninput="checkTrabajo()" placeholder="0">
+            <span style="font-size:0.85rem;color:var(--gris-medio)">horas semanales</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.83rem;font-weight:600;color:var(--gris-texto);margin-bottom:0.5rem">¿Ese trabajo se relaciona con la carrera de Ingeniería Civil?</div>
+          <div class="opciones-radio" id="opciones-p6relacion">
+            <label class="opcion-radio" onclick="seleccionarRadio('p6relacion', 'si', this); checkTrabajo()"><input type="radio" name="p6relacion" value="si"><div class="radio-circulo"></div>Sí, directamente</label>
+            <label class="opcion-radio" onclick="seleccionarRadio('p6relacion', 'parcial', this); checkTrabajo()"><input type="radio" name="p6relacion" value="parcial"><div class="radio-circulo"></div>Parcialmente</label>
+            <label class="opcion-radio" onclick="seleccionarRadio('p6relacion', 'no', this); checkTrabajo()"><input type="radio" name="p6relacion" value="no"><div class="radio-circulo"></div>No se relaciona</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="alerta" id="alerta-b1">⚠️ Por favor completá todos los campos antes de continuar.</div>
     <div class="nav-bloques">
       <button class="btn-secondary" disabled>← Anterior</button>
@@ -370,7 +398,7 @@
 
     <!-- P6: Timing -->
     <div class="pregunta-card" id="card-p6">
-      <div class="pregunta-label">Pregunta 6</div>
+      <div class="pregunta-label">Pregunta 7</div>
       <div class="pregunta-texto">¿En qué momento estimás que podrás trabajar activamente en tu Proyecto Final de Carrera?</div>
       <div class="opciones-radio">
         <label class="opcion-radio" onclick="seleccionarRadio('p6', '2026', this)"><input type="radio" name="p6" value="2026"><div class="radio-circulo"></div>Este año (2026)</label>
@@ -382,7 +410,7 @@
 
     <!-- P7: Idea de tema -->
     <div class="pregunta-card" id="card-p7">
-      <div class="pregunta-label">Pregunta 7</div>
+      <div class="pregunta-label">Pregunta 8</div>
       <div class="pregunta-texto">¿Ya tenés un tema o problemática en mente para tu PFC?</div>
       <div class="opciones-radio">
         <label class="opcion-radio" onclick="seleccionarRadio('p7', 'concreta', this); mostrarCondicional('cond-p9', true)"><input type="radio" name="p7" value="concreta"><div class="radio-circulo"></div>Sí, tengo una idea concreta</label>
@@ -393,7 +421,7 @@
 
     <!-- P8: Área de interés -->
     <div class="pregunta-card" id="card-p8">
-      <div class="pregunta-label">Pregunta 8</div>
+      <div class="pregunta-label">Pregunta 9</div>
       <div class="pregunta-texto">¿En qué área o áreas te interesaría enmarcar tu PFC?</div>
       <div class="pregunta-hint">Podés elegir más de una opción, independientemente de si ya tenés tema definido.</div>
       <div class="opciones-check" id="opciones-p8">
@@ -415,7 +443,7 @@
     <!-- P9: Director (condicional) -->
     <div class="condicional" id="cond-p9" style="margin-bottom:0">
       <div class="pregunta-card" id="card-p9" style="margin-bottom:0">
-        <div class="pregunta-label">Pregunta 9</div>
+        <div class="pregunta-label">Pregunta 10</div>
         <div class="pregunta-texto">¿Ya tenés director/a de PFC contactado o asignado?</div>
         <div class="opciones-radio">
           <label class="opcion-radio" onclick="seleccionarRadio('p9', 'definido', this)"><input type="radio" name="p9" value="definido"><div class="radio-circulo"></div>Sí, ya definido/a</label>
@@ -443,7 +471,7 @@
     </div>
 
     <div class="pregunta-card" id="card-p10">
-      <div class="pregunta-label">Pregunta 10</div>
+      <div class="pregunta-label">Pregunta 11</div>
       <div class="pregunta-texto">¿Qué esperás llevarte de la cursada del PFC este año?</div>
       <div class="pregunta-hint">Respondé con tus propias palabras. No hay respuestas correctas ni incorrectas.</div>
       <textarea class="textarea-libre" id="p10" placeholder="Escribí aquí tu respuesta..." oninput="checkCard('card-p10', this.value.trim().length > 0)"></textarea>
@@ -485,6 +513,7 @@
         <div class="res-fila"><span class="res-fila-label">Hs. electivas aprobadas</span><span class="res-fila-valor" id="r-elec-aprobadas">—</span></div>
         <div class="res-fila"><span class="res-fila-label">Hs. electivas en curso</span><span class="res-fila-valor" id="r-elec-cursando">—</span></div>
         <div class="res-fila"><span class="res-fila-label">Estado PPS</span><span class="res-fila-valor" id="r-pps">—</span></div>
+        <div class="res-fila"><span class="res-fila-label">Situación laboral</span><span class="res-fila-valor" id="r-trabajo">—</span></div>
       </div>
     </div>
 
@@ -618,6 +647,18 @@ function checkElectivas() {
   checkCard('card-p4', hs !== '');
 }
 
+function checkTrabajo() {
+  const trabaja = respuestas['p6trabaja'];
+  let completo = trabaja === 'no';
+  if (trabaja === 'si') {
+    const horas = document.getElementById('p6trabajo_horas').value;
+    respuestas['p6trabajo_horas'] = horas;
+    const relacion = respuestas['p6relacion'];
+    completo = horas !== '' && !!relacion;
+  }
+  checkCard('card-p6trabajo', completo);
+}
+
 // =============================================
 // VALIDACIÓN Y AVANCE
 // =============================================
@@ -630,7 +671,8 @@ function avanzarBloque(bloque) {
     const p4hs = document.getElementById('p4_hs_aprobadas').value;
     const p4b = respuestas['p4b'];
     const p5 = respuestas['p5'];
-    if (!p3 || !p4hs || !p4b || !p5) {
+    const p6trabaja = respuestas['p6trabaja'];
+    if (!p3 || !p4hs || !p4b || !p5 || !p6trabaja) {
       document.getElementById(alertaId).style.display = 'block';
       return;
     }
@@ -640,6 +682,12 @@ function avanzarBloque(bloque) {
       const p4c = document.getElementById('p4_hs_cursando').value;
       if (!p4c) { document.getElementById(alertaId).style.display = 'block'; return; }
       respuestas['p4_hs_cursando'] = parseInt(p4c);
+    }
+    if (p6trabaja === 'si') {
+      const p6horas = document.getElementById('p6trabajo_horas').value;
+      const p6relacion = respuestas['p6relacion'];
+      if (!p6horas || !p6relacion) { document.getElementById(alertaId).style.display = 'block'; return; }
+      respuestas['p6trabajo_horas'] = parseInt(p6horas);
     }
     mostrarBloque(2);
   }
@@ -697,6 +745,17 @@ function mostrarResultados() {
   // PPS
   const ppsLabels = { aprobada: '✓ Aprobada', en_curso: 'En curso', no_iniciada: 'No iniciada' };
   document.getElementById('r-pps').textContent = ppsLabels[r.p5] || '—';
+
+  // Situación laboral
+  if (r.p6trabaja === 'si') {
+    const relacionLabels = { si: 'relacionado', parcial: 'parcialmente relacionado', no: 'no relacionado' };
+    const horas = r.p6trabajo_horas || 0;
+    document.getElementById('r-trabajo').textContent = 'Sí, ' + horas + ' hs/sem (' + (relacionLabels[r.p6relacion] || '—') + ')';
+  } else if (r.p6trabaja === 'no') {
+    document.getElementById('r-trabajo').textContent = 'No trabaja';
+  } else {
+    document.getElementById('r-trabajo').textContent = '—';
+  }
 
   // Timing
   const timingLabels = { '2026': 'Este año (2026)', '2027': 'En 2027', '2028+': 'En 2028 o después', 'no_se': 'No lo sé todavía' };
@@ -822,6 +881,9 @@ async function guardarDatosAgregados() {
       electivas_en_curso: r.p4b || '',
       hs_electivas_cursando: r.p4_hs_cursando || 0,
       pps: r.p5 || '',
+      trabaja_actualmente: r.p6trabaja || '',
+      hs_trabajo_semanal: r.p6trabaja === 'si' ? (r.p6trabajo_horas || 0) : '',
+      relacion_trabajo_carrera: r.p6trabaja === 'si' ? (r.p6relacion || '') : '',
       timing_pfc: r.p6 || '',
       idea_tema: r.p7 || '',
       areas: Array.isArray(r.p8) ? r.p8.join(', ') : '',
