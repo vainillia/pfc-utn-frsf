@@ -47,6 +47,7 @@ button:disabled{background:#94A3B8}.alerta{display:none;background:#FDECEA;color
 
 <button id="btn" onclick="enviar()">Enviar devolución</button>
 </div>
+<div id="toast" style="display:none;position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#27AE60;color:#fff;padding:10px 16px;border-radius:8px;font-size:14px;z-index:9"></div>
 <div class="ok card" id="ok"><div style="font-size:34px">✓</div><h2 style="color:#003D7C">Devolución enviada</h2><p id="oktxt"></p><button onclick="otra()">Evaluar otro grupo</button></div>
 
 <script>
@@ -66,9 +67,11 @@ async function enviar(){
   $('btn').disabled=true;$('btn').textContent='Enviando...';
   const payload={tipo:'plenario_clase6',timestamp:new Date().toISOString(),evaluador:ev,grupo_evaluado:ge,p1:ps[0],p2:ps[1],p3:ps[2],p4:ps[3],pregunta:preg};
   try{await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});
-    $('oktxt').innerHTML=`Tu devolución para <b>${ge}</b> fue registrada.`;$('form').style.display='none';$('ok').style.display='block';
+    const n=parseInt(ge.slice(6))+1;
+    otra(n<=GRUPOS.length?'Grupo '+n:'');
+    const t=$('toast');t.textContent='✓ Devolución enviada para '+ge+'. Ya podés cargar la siguiente.';t.style.display='block';setTimeout(()=>t.style.display='none',3500);
   }catch(e){$('btn').disabled=false;$('btn').textContent='Enviar devolución';$('alerta').textContent='No se pudo enviar. Reintentá.';$('alerta').style.display='block';}
 }
-function otra(){document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);$('pregunta').value='';$('grupo_evaluado').value='';
+function otra(sig){document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);$('pregunta').value='';$('grupo_evaluado').value=sig||'';
   $('btn').disabled=false;$('btn').textContent='Enviar devolución';$('ok').style.display='none';$('form').style.display='block';scrollTo({top:0})}
 </script></body></html>
